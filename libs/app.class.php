@@ -23,31 +23,29 @@ class App{
         $layout = self::$router->getRoute();
         $access = Session::get('access');
 
-        if ( !isset($access) && self::$router->getController() != 'login'){
-            if ($layout == 'default'){
-
-            }else if ($layout == 'admin'){
+     
+        if ($layout == 'admin'){
+            if ( !isset($access) && self::$router->getController() != 'login'){
                 Router::redirect('/admin/login/');
-            }else if ($layout == 'u'){
-                Router::redirect('/u/login/');
             }
-       }else if (isset($access)){
+            /*
+            if ( !isset($access) && $controller_method != 'admin_logout'){
+                Router::redirect('/admin/users/login/');
+           }*/
 
-            if ($layout == 'default'){
+            if ( isset($access) &&
+                //!in_array(strtolower(self::$router->getController()), Session::get('pages')) &&
+                strtolower(self::$router->getController()) != 'home'){
 
-            }else if($layout == 'ajax') {
+                if ((self::$router->getController() == 'users') &&
+                    ($controller_method == 'admin_account_edit' ||
+                        $controller_method == 'admin_change_password')){
+                    //do nothing
+                }else {
+                    Router::redirect('/admin/');
+                }
 
-            }else if($layout == 'print') {
-
-            }else if (($layout != 'admin' && $access == "1")){
-                Router::redirect('/admin/');
-            }else if (($layout != 'u' && $access == "3")){
-                Router::redirect('/u/');
-            }else {
-                //do nothing here
             }
-        }else {
-            //do nothing here
         }
 
 

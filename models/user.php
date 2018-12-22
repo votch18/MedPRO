@@ -5,14 +5,14 @@ class User extends Model {
     private $action = null;
 
     public function getUsers(){
-        $sql = "select a.*, (select description from l_municipality where lid = a.branch_id) as branch_assignment from t_users a order by a.access asc";
+        $sql = "SELECT a.* FROM t_users a ORDER BY a.access asc";
 
         return $this->db->query($sql);
     }
 
     public function getByUserName($u){
         $u = $this->db->escape($u);
-        $sql = "select * from t_users where username='{$u}' limit 1";
+        $sql = "SELECT * FROM t_users WHERE username='{$u}' LIMIT 1";
 
         $result = $this->db->query($sql);
         if (isset($result[0])){
@@ -23,7 +23,7 @@ class User extends Model {
 
     public function getByUserId($id){
         $id = $this->db->escape($id);
-        $sql = "select * from t_users a where a.userid='{$id}' limit 1";
+        $sql = "SELECT * FROM t_users a WHERE a.userid='{$id}' LIMIT 1";
 
         $result = $this->db->query($sql);
         if (isset($result[0])){
@@ -34,31 +34,22 @@ class User extends Model {
 
     public function getSalt($u){
         $u = $this->db->escape($u);
-        $sql = "select * from t_users where username='{$u}' limit 1";
+        $sql = "SELECT * FROM t_users WHERE username='{$u}' LIMIT 1";
 
         $result = $this->db->query($sql);
-        if (isset($result['asin'])){
-            return $result['asin'];
+        if (isset($result['salt'])){
+            return $result['salt'];
         }
         return false;
     }
 
    public function deleteUser($id){
        $id = $this->db->escape($id);
-       $sql = "delete from t_users where userid='{$id}'";
+       $sql = "delete FROM t_users WHERE userid='{$id}'";
 
 
        return $this->db->query($sql);
    }
-
-    public function getLocation($id){
-        $sql = "select * from t_users_info where userid='{$id}'";
-
-        $result = $this->db->query($sql);
-        if (isset($result[0])){
-            return $result[0]['img'];
-        }
-    }
 
     public function save($data, $id = null){
         $id = $this->db->escape($id);
@@ -66,12 +57,7 @@ class User extends Model {
 
         $lname = $this->db->escape($data['lname']);
         $fname = $this->db->escape($data['fname']);
-        $mname = $this->db->escape($data['mname']);
-        $birthdate = date('Y-m-d', strtotime($data["birthdate"]));
         $gender = $this->db->escape($data['gender']);
-        $address = $this->db->escape($data['address']);
-        $position = $this->db->escape($data['position']);
-		$branch = $this->db->escape($data['branch']);
 		$access = $this->db->escape($data['access']);
 
 
@@ -81,45 +67,32 @@ class User extends Model {
             //check username for duplicate
             if (self::getByUserName($usr)) return false;
 
-            //check names for duplicate
-            if (self::checkFaculty($lname, $fname, $mname)) return false;
-
             $usr = $this->db->escape($data['username']);
             $pwd = $this->db->escape($data['password']);
             $salt = self::generateRandomCode();
             $hash = md5($salt.$pwd);
 
-            $sql = "insert into t_users
-                set
+            $sql = "INSERT INTO t_users
+                SET
                 lname = '{$lname}',
                 fname = '{$fname}',
-                mname = '{$mname}',
-                birthdate = '{$birthdate}',
                 gender = '{$gender}',
-                address = '{$address}',
-                position = '{$position}',
                 userid = '{$userid}',
                 username = '{$usr}',
                 password = '{$hash}',
                 access = '{$access}',
-                asin = '{$salt}',
-				branch_id = '{$branch}',
+                salt = '{$salt}',
                 is_active = 1
             ";
 
 
         }else {
-            $sql = "update t_users
-                 set
+            $sql = "UPDATE t_users
+                 SET
                  lname = '{$lname}',
                  fname = '{$fname}',
-                 mname = '{$mname}',
-                 birthdate = '{$birthdate}',
                  gender = '{$gender}',
-                 address = '{$address}',
-                 position = '{$position}',
-				 branch_id = '{$branch}'
-                 where userid = '{$id}'
+                 WHERE userid = '{$id}'
             ";
 
 
@@ -138,12 +111,12 @@ class User extends Model {
                 $salt = self::generateRandomCode();
                 $hash = md5($salt.$pwd);
 
-                $sql = "update t_users
-                    set
+                $sql = "UPDATE t_users
+                    SET
                     username = '{$usn}',
                     password = '{$hash}',
-                    asin = '{$salt}'
-                    where userid = '{$id}'
+                    salt = '{$salt}'
+                    WHERE userid = '{$id}'
                 ";
 
                 return $this->db->query($sql);
@@ -163,12 +136,12 @@ class User extends Model {
              $salt = self::generateRandomCode();
              $hash = md5($salt.$pwd);
 
-            $sql = "update t_subscribers
-                set
+            $sql = "UPDATE t_subscribers
+                SET
 				username = '{$usn}',
                 password = '{$hash}',
-				asin = '{$salt}'
-                where idno = '{$id}'
+				salt = '{$salt}'
+                WHERE idno = '{$id}'
             ";
 
             return $this->db->query($sql);
@@ -201,9 +174,9 @@ class User extends Model {
             return false;
         }
 
-        $sql = "update t_users_info
-            set img = '{$new_filename}'
-            where userid = '{$id}'
+        $sql = "UPDATE t_users_info
+            SET img = '{$new_filename}'
+            WHERE userid = '{$id}'
         ";
 
         $action = "Change user picture: userid=".$id;
@@ -216,7 +189,7 @@ class User extends Model {
     }
 
     public function checkFaculty($lname, $fname, $mname){
-        $sql = "select * from t_users where lname = '{$lname}' and fname = '{$fname}' and mname = '{$mname}'";
+        $sql = "SELECT * FROM t_users WHERE lname = '{$lname}' and fname = '{$fname}' and mname = '{$mname}'";
 
       $result = $this->db->query($sql);
       if (isset($result[0])){
@@ -226,7 +199,7 @@ class User extends Model {
    }
 
    public function checkSubscribersUserName($username){
-        $sql = "select * from t_subscribers where username='{$username}' limit 1";
+        $sql = "SELECT * FROM t_subscribers WHERE username='{$username}' LIMIT 1";
 
         $result = $this->db->query($sql);
         if (isset($result[0])){
@@ -236,7 +209,7 @@ class User extends Model {
     }
 
     public function checkNames($lname, $fname){
-        $sql = "select * from t_users_info where lname='{$lname}' and fname='{$fname}' limit 1";
+        $sql = "SELECT * FROM t_users_info WHERE lname='{$lname}' and fname='{$fname}' LIMIT 1";
 
         $result = $this->db->query($sql);
         if (isset($result[0])){
@@ -247,7 +220,7 @@ class User extends Model {
 
 
 	 public function checkBranch($branch){
-        $sql = "select * from t_users_info where branch_assignment='{$branch}'limit 1";
+        $sql = "SELECT * FROM t_users_info WHERE branch_assignment='{$branch}'LIMIT 1";
 
         $result = $this->db->query($sql);
         if (isset($result[0])){

@@ -4,10 +4,9 @@ class HomeController extends Controller{
 
     public function __construct($data = array()){
         parent::__construct($data);
-        $this->model = new Member;
+        $this->model = null;
     }
     public function index(){
-        Router::redirect('/admin/login/');
     }
 
     public function admin_index(){

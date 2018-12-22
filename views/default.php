@@ -1,153 +1,592 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta name="google-site-verification" content="6RlxAasSqBJpNnnuOPs05px8gu60UgzGYIFeGq4Qbk0" />
+   
     <title><?=ucwords(strtolower(Setting::get("site_name"))) ?></title>
     <meta charset="UTF-8">
-    <!-- Site made with Mobirise Website Builder v3.10.5, https://mobirise.com -->
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="/assets/images/logo.png" type="image/x-icon">
-    <meta name="description" content="Sarnimian Inland Resort the best Inland Resort in the Province of Agusan del Sur">
-    <meta name="keywords" content="sarnimian resort rosario agusan del sur, sarnimian resort rosario, sarnimian inland resort rosario agusan del sur, sarnimian inland resort map, sarnimian inland resort map, agusan del sur resorts, rosario agusan del sur philippines, agusan del sur tourist spots, agusan del sur list of hotels">
-
-
-    <?php if (App::getRouter()->getController() == "home" && App::getRouter()->getAction() == "signup") { ?>
-
-
-     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-
-     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-
-     <!-- Latest compiled JavaScript -->
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-
-    <?php } ?>
-
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic&amp;subset=latin">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Montserrat:400,700">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway:100,100i,200,200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i">
-    <link rel="stylesheet" href="/assets/bootstrap-material-design-font/css/material.css">
-    <link rel="stylesheet" href="/assets/et-line-font-plugin/style.css">
-    <link rel="stylesheet" href="/assets/web/assets/mobirise-icons/mobirise-icons.css">
-    <link rel="stylesheet" href="/assets/tether/tether.min.css">
-    <link rel="stylesheet" href="/assets/bootstrap/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/assets/dropdown/css/style.css">
-    <link rel="stylesheet" href="/assets/animate.css/animate.min.css">
-    <link rel="stylesheet" href="/assets/theme/css/style.css">
-    <link rel="stylesheet" href="/assets/mobirise-gallery/style.css">
-    <link rel="stylesheet" href="/assets/mobirise/css/mbr-additional.css" type="text/css">
-    <link rel="stylesheet" href="/css/calendar.css" type="text/css">
-
-
-
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="icon" type="image/png" href="images/icons/favicon.png"/>
+	<link rel="stylesheet" type="text/css" href="/assets/default/vendor/bootstrap/css/bootstrap.min.css">
+	<link rel="stylesheet" type="text/css" href="/assets/default/fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" type="text/css" href="/assets/default/fonts/themify/themify-icons.css">
+	<link rel="stylesheet" type="text/css" href="/assets/default/fonts/Linearicons-Free-v1.0.0/icon-font.min.css">
+	<link rel="stylesheet" type="text/css" href="/assets/default/fonts/elegant-font/html-css/style.css">
+	<link rel="stylesheet" type="text/css" href="/assets/default/vendor/animate/animate.css">
+	<link rel="stylesheet" type="text/css" href="/assets/default/vendor/css-hamburgers/hamburgers.min.css">
+	<link rel="stylesheet" type="text/css" href="/assets/default/vendor/animsition/css/animsition.min.css">
+	<link rel="stylesheet" type="text/css" href="/assets/default/vendor/select2/select2.min.css">
+	<link rel="stylesheet" type="text/css" href="/assets/default/vendor/daterangepicker/daterangepicker.css">
+	<link rel="stylesheet" type="text/css" href="/assets/default/vendor/slick/slick.css">
+	<link rel="stylesheet" type="text/css" href="/assets/default/vendor/lightbox2/css/lightbox.min.css">
+	<link rel="stylesheet" type="text/css" href="/assets/default/css/util.css">
+	<link rel="stylesheet" type="text/css" href="/assets/default/css/main.css">
 </head>
-<body>
+<body class="animsition">
 
-<div id="fb-root"></div>
-<script>(function(d, s, id) {
-  var js, fjs = d.getElementsByTagName(s)[0];
-  if (d.getElementById(id)) return;
-  js = d.createElement(s); js.id = id;
-  js.src = 'https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.12&appId=215405009196469&autoLogAppEvents=1';
-  fjs.parentNode.insertBefore(js, fjs);
-}(document, 'script', 'facebook-jssdk'));</script>
+<!-- Header -->
+<header class="header1">
+		<!-- Header desktop -->
+		<div class="container-menu-header">
+			<div class="topbar">
+				<div class="topbar-social">
+					<a href="#" class="topbar-social-item fa fa-facebook"></a>
+					<a href="#" class="topbar-social-item fa fa-instagram"></a>
+					<a href="#" class="topbar-social-item fa fa-pinterest-p"></a>
+					<a href="#" class="topbar-social-item fa fa-snapchat-ghost"></a>
+					<a href="#" class="topbar-social-item fa fa-youtube-play"></a>
+				</div>
 
-<section id="ext_menu-0">
+				<span class="topbar-child1">
+					Free shipping for standard order over $100
+				</span>
 
-    <nav class="navbar navbar-dropdown navbar-fixed-top">
-        <div class="container">
+				<div class="topbar-child2">
+					<span class="topbar-email">
+						fashe@example.com
+					</span>
 
-            <div class="mbr-table">
-                <div class="mbr-table-cell">
-                    <div class="navbar-brand">
-                        <a href="/" class="navbar-logo"><img src="/assets/images/logo.png"></a>
-                        <a class="navbar-caption text-black" href="/"><?=strtoupper(Setting::get("site_name"))?><br></a>
-                    </div>
+					<div class="topbar-language rs1-select2">
+						<select class="selection-1" name="time">
+							<option>USD</option>
+							<option>EUR</option>
+						</select>
+					</div>
+				</div>
+			</div>
 
-                </div>
-                <div class="mbr-table-cell">
+			<div class="wrap_header">
+				<!-- Logo -->
+				<a href="index.html" class="logo">
+					<h1 style="font-weight: bold;">MedPro</h1>
+				</a>
 
-                    <button class="navbar-toggler pull-xs-right hidden-md-up" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar">
-                        <div class="hamburger-icon"></div>
-                    </button>
+				<!-- Menu -->
+				<div class="wrap_menu">
+					<nav class="menu">
+						<ul class="main_menu">
+							<li>
+								<a href="index.html">Home</a>
+								<ul class="sub_menu">
+									<li><a href="index.html">Homepage V1</a></li>
+									<li><a href="home-02.html">Homepage V2</a></li>
+									<li><a href="home-03.html">Homepage V3</a></li>
+								</ul>
+							</li>
 
-                    <ul class="nav-dropdown collapse pull-xs-right nav navbar-nav navbar-toggleable-sm" id="exCollapsingNavbar">
-                      <!--<li class="nav-item"><a class="nav-link link" href="/home#services">OUR SERVICES</a></li>-->                      
-                        <li class="nav-item"><a class="nav-link link" href="/blogs/">BLOG</a></li>
-                      <li class="nav-item"><a class="nav-link link" href="/home#gallery">AMENITIES</a></li>
-                        <li class="nav-item"><a class="nav-link link" href="/rooms/available/">ROOMS</a></li>
-                        <li class="nav-item"><a class="nav-link link" href="/home/signup/">SIGN-UP</a></li>
-                        <li class="nav-item nav-btn"><a class="nav-link btn btn-black-outline btn-black" href="/u/login/">LOGIN</a></li>
-                        <li class="nav-item nav-btn">
-                            <a class="nav-link btn btn-primary" href="/home/room_check/">BOOK NOW</a></li></ul>
-                    <button hidden="" class="navbar-toggler navbar-close" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar">
-                        <div class="close-icon"></div>
-                    </button>
+							<li>
+								<a href="product.html">Shop</a>
+							</li>
 
-                </div>
-            </div>
+							<li class="sale-noti">
+								<a href="product.html">Sale</a>
+							</li>
 
-        </div>
-    </nav>
+							<li>
+								<a href="cart.html">Features</a>
+							</li>
 
-</section>
+							<li>
+								<a href="blog.html">Blog</a>
+							</li>
 
-             <?php echo $content['content_html']; ?>
+							<li>
+								<a href="about.html">About</a>
+							</li>
 
-<section class="mbr-section mbr-section-md-padding mbr-footer footer2" id="contacts2-b" style="background-color: rgb(46, 46, 46); padding-top: 90px; padding-bottom: 90px;">
+							<li>
+								<a href="contact.html">Contact</a>
+							</li>
+						</ul>
+					</nav>
+				</div>
 
-    <div class="container">
-        <div class="row">
-            <div class="mbr-footer-content col-xs-12 col-md-3">
-                <p><strong>Address</strong><br><?=Setting::get("address")?><br><br><br>
-                    <strong>Contacts</strong><br>
-                    <?=Setting::get("contact_no")?></p>
-            </div>
-            <div class="mbr-footer-content col-xs-12 col-md-3"><strong>Links</strong>
-                <ul>
-                    <li><a class="text-white" href="/">LGU-Rosario, ADS</a></li>
-                    <li><a class="text-white" href="/">PNP</a></li>
-                    <li><a class="text-white" href="/">BFP</a></li>
-                </ul>
-            </div>
-            <div class="col-xs-12 col-md-6">
-                <div class="mbr-map" title="Sarnimian Inland Resort Map"><iframe frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/place?key=AIzaSyA0Dx_boXQiwvdz8sJHoYeZNVTdoWONYkU&amp;q=place_id:ChIJ4Qm6BDPh_TIR4qFaAPEeowk" allowfullscreen=""></iframe></div>
-            </div>
-        </div>
-    </div>
-</section>
+				<!-- Header Icon -->
+				<div class="header-icons">
+					<a href="#" class="header-wrapicon1 dis-block">
+						<img src="images/icons/icon-header-01.png" class="header-icon1" alt="ICON">
+					</a>
 
-<footer class="mbr-small-footer mbr-section mbr-section-nopadding" id="footer1-c" style="background-color: rgb(50, 50, 50); padding-top: 1.75rem; padding-bottom: 1.75rem;">
-    <div class="container">
-    <?php
-    $now = new DateTime("now");
-    ?>
-        <p class="text-xs-center"><?=Setting::get('footer')?> Copyright (c) <?=$now->format('Y')?> <?=strtoupper(Setting::get("site_name"))?></p>
-    </div>
-</footer>
+					<span class="linedivide1"></span>
+
+					<div class="header-wrapicon2">
+						<img src="images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
+						<span class="header-icons-noti">0</span>
+
+						<!-- Header cart noti -->
+						<div class="header-cart header-dropdown">
+							<ul class="header-cart-wrapitem">
+								<li class="header-cart-item">
+									<div class="header-cart-item-img">
+										<img src="images/item-cart-01.jpg" alt="IMG">
+									</div>
+
+									<div class="header-cart-item-txt">
+										<a href="#" class="header-cart-item-name">
+											White Shirt With Pleat Detail Back
+										</a>
+
+										<span class="header-cart-item-info">
+											1 x $19.00
+										</span>
+									</div>
+								</li>
+
+								<li class="header-cart-item">
+									<div class="header-cart-item-img">
+										<img src="images/item-cart-02.jpg" alt="IMG">
+									</div>
+
+									<div class="header-cart-item-txt">
+										<a href="#" class="header-cart-item-name">
+											Converse All Star Hi Black Canvas
+										</a>
+
+										<span class="header-cart-item-info">
+											1 x $39.00
+										</span>
+									</div>
+								</li>
+
+								<li class="header-cart-item">
+									<div class="header-cart-item-img">
+										<img src="images/item-cart-03.jpg" alt="IMG">
+									</div>
+
+									<div class="header-cart-item-txt">
+										<a href="#" class="header-cart-item-name">
+											Nixon Porter Leather Watch In Tan
+										</a>
+
+										<span class="header-cart-item-info">
+											1 x $17.00
+										</span>
+									</div>
+								</li>
+							</ul>
+
+							<div class="header-cart-total">
+								Total: $75.00
+							</div>
+
+							<div class="header-cart-buttons">
+								<div class="header-cart-wrapbtn">
+									<!-- Button -->
+									<a href="cart.html" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+										View Cart
+									</a>
+								</div>
+
+								<div class="header-cart-wrapbtn">
+									<!-- Button -->
+									<a href="#" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+										Check Out
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Header Mobile -->
+		<div class="wrap_header_mobile">
+			<!-- Logo moblie -->
+			<a href="index.html" class="logo-mobile">
+				<img src="images/icons/logo.png" alt="IMG-LOGO">
+			</a>
+
+			<!-- Button show menu -->
+			<div class="btn-show-menu">
+				<!-- Header Icon mobile -->
+				<div class="header-icons-mobile">
+					<a href="#" class="header-wrapicon1 dis-block">
+						<img src="images/icons/icon-header-01.png" class="header-icon1" alt="ICON">
+					</a>
+
+					<span class="linedivide2"></span>
+
+					<div class="header-wrapicon2">
+						<img src="images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
+						<span class="header-icons-noti">0</span>
+
+						<!-- Header cart noti -->
+						<div class="header-cart header-dropdown">
+							<ul class="header-cart-wrapitem">
+								<li class="header-cart-item">
+									<div class="header-cart-item-img">
+										<img src="images/item-cart-01.jpg" alt="IMG">
+									</div>
+
+									<div class="header-cart-item-txt">
+										<a href="#" class="header-cart-item-name">
+											White Shirt With Pleat Detail Back
+										</a>
+
+										<span class="header-cart-item-info">
+											1 x $19.00
+										</span>
+									</div>
+								</li>
+
+								<li class="header-cart-item">
+									<div class="header-cart-item-img">
+										<img src="images/item-cart-02.jpg" alt="IMG">
+									</div>
+
+									<div class="header-cart-item-txt">
+										<a href="#" class="header-cart-item-name">
+											Converse All Star Hi Black Canvas
+										</a>
+
+										<span class="header-cart-item-info">
+											1 x $39.00
+										</span>
+									</div>
+								</li>
+
+								<li class="header-cart-item">
+									<div class="header-cart-item-img">
+										<img src="images/item-cart-03.jpg" alt="IMG">
+									</div>
+
+									<div class="header-cart-item-txt">
+										<a href="#" class="header-cart-item-name">
+											Nixon Porter Leather Watch In Tan
+										</a>
+
+										<span class="header-cart-item-info">
+											1 x $17.00
+										</span>
+									</div>
+								</li>
+							</ul>
+
+							<div class="header-cart-total">
+								Total: $75.00
+							</div>
+
+							<div class="header-cart-buttons">
+								<div class="header-cart-wrapbtn">
+									<!-- Button -->
+									<a href="cart.html" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+										View Cart
+									</a>
+								</div>
+
+								<div class="header-cart-wrapbtn">
+									<!-- Button -->
+									<a href="#" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+										Check Out
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+
+				<div class="btn-show-menu-mobile hamburger hamburger--squeeze">
+					<span class="hamburger-box">
+						<span class="hamburger-inner"></span>
+					</span>
+				</div>
+			</div>
+		</div>
+
+		<!-- Menu Mobile -->
+		<div class="wrap-side-menu" >
+			<nav class="side-menu">
+				<ul class="main-menu">
+					<li class="item-topbar-mobile p-l-20 p-t-8 p-b-8">
+						<span class="topbar-child1">
+							Free shipping for standard order over $100
+						</span>
+					</li>
+
+					<li class="item-topbar-mobile p-l-20 p-t-8 p-b-8">
+						<div class="topbar-child2-mobile">
+							<span class="topbar-email">
+								fashe@example.com
+							</span>
+
+							<div class="topbar-language rs1-select2">
+								<select class="selection-1" name="time">
+									<option>USD</option>
+									<option>EUR</option>
+								</select>
+							</div>
+						</div>
+					</li>
+
+					<li class="item-topbar-mobile p-l-10">
+						<div class="topbar-social-mobile">
+							<a href="#" class="topbar-social-item fa fa-facebook"></a>
+							<a href="#" class="topbar-social-item fa fa-instagram"></a>
+							<a href="#" class="topbar-social-item fa fa-pinterest-p"></a>
+							<a href="#" class="topbar-social-item fa fa-snapchat-ghost"></a>
+							<a href="#" class="topbar-social-item fa fa-youtube-play"></a>
+						</div>
+					</li>
+
+					<li class="item-menu-mobile">
+						<a href="index.html">Home</a>
+						<ul class="sub-menu">
+							<li><a href="index.html">Homepage V1</a></li>
+							<li><a href="home-02.html">Homepage V2</a></li>
+							<li><a href="home-03.html">Homepage V3</a></li>
+						</ul>
+						<i class="arrow-main-menu fa fa-angle-right" aria-hidden="true"></i>
+					</li>
+
+					<li class="item-menu-mobile">
+						<a href="product.html">Shop</a>
+					</li>
+
+					<li class="item-menu-mobile">
+						<a href="product.html">Sale</a>
+					</li>
+
+					<li class="item-menu-mobile">
+						<a href="cart.html">Features</a>
+					</li>
+
+					<li class="item-menu-mobile">
+						<a href="blog.html">Blog</a>
+					</li>
+
+					<li class="item-menu-mobile">
+						<a href="about.html">About</a>
+					</li>
+
+					<li class="item-menu-mobile">
+						<a href="contact.html">Contact</a>
+					</li>
+				</ul>
+			</nav>
+		</div>
+	</header>
+
+<!-- End Header -->
+
+<!-- Content -->
+
+    <?php echo $content['content_html']; ?>
+
+<!-- End Content -->
 
 
-<script src="/assets/web/assets/jquery/jquery.min.js"></script>
-<script src="/assets/tether/tether.min.js"></script>
-<script src="/assets/bootstrap/js/bootstrap.min.js"></script>
-<script src="/assets/smooth-scroll/SmoothScroll.js"></script>
-<script src="/assets/dropdown/js/script.min.js"></script>
-<script src="/assets/touchSwipe/jquery.touchSwipe.min.js"></script>
-<script src="/assets/jarallax/jarallax.js"></script>
-<script src="/assets/masonry/masonry.pkgd.min.js"></script>
-<script src="/assets/imagesloaded/imagesloaded.pkgd.min.js"></script>
-<script src="/assets/bootstrap-carousel-swipe/bootstrap-carousel-swipe.js"></script>
-<script src="/assets/viewportChecker/jquery.viewportchecker.js"></script>
-<script src="/assets/theme/js/script.js"></script>
-<script src="/assets/mobirise-gallery/player.min.js"></script>
-<script src="/assets/mobirise-gallery/script.js"></script>
-<script src="/assets/bootstrap-carousel-swipe/bootstrap-carousel-swipe.js"></script>
 
-<script src="/js/myjs.js"></script>
-<input name="animation" type="hidden">
+<!-- Footer -->
+	<footer class="bg6 p-t-45 p-b-43 p-l-45 p-r-45">
+		<div class="flex-w p-b-90">
+			<div class="w-size6 p-t-30 p-l-15 p-r-15 respon3">
+				<h4 class="s-text12 p-b-30">
+					GET IN TOUCH
+				</h4>
+
+				<div>
+					<p class="s-text7 w-size27">
+						Any questions? Let us know in store at 8th floor, 379 Hudson St, New York, NY 10018 or call us on (+1) 96 716 6879
+					</p>
+
+					<div class="flex-m p-t-30">
+						<a href="#" class="fs-18 color1 p-r-20 fa fa-facebook"></a>
+						<a href="#" class="fs-18 color1 p-r-20 fa fa-instagram"></a>
+						<a href="#" class="fs-18 color1 p-r-20 fa fa-pinterest-p"></a>
+						<a href="#" class="fs-18 color1 p-r-20 fa fa-snapchat-ghost"></a>
+						<a href="#" class="fs-18 color1 p-r-20 fa fa-youtube-play"></a>
+					</div>
+				</div>
+			</div>
+
+			<div class="w-size7 p-t-30 p-l-15 p-r-15 respon4">
+				<h4 class="s-text12 p-b-30">
+					Categories
+				</h4>
+
+				<ul>
+					<li class="p-b-9">
+						<a href="#" class="s-text7">
+							Men
+						</a>
+					</li>
+
+					<li class="p-b-9">
+						<a href="#" class="s-text7">
+							Women
+						</a>
+					</li>
+
+					<li class="p-b-9">
+						<a href="#" class="s-text7">
+							Dresses
+						</a>
+					</li>
+
+					<li class="p-b-9">
+						<a href="#" class="s-text7">
+							Sunglasses
+						</a>
+					</li>
+				</ul>
+			</div>
+
+			<div class="w-size7 p-t-30 p-l-15 p-r-15 respon4">
+				<h4 class="s-text12 p-b-30">
+					Links
+				</h4>
+
+				<ul>
+					<li class="p-b-9">
+						<a href="#" class="s-text7">
+							Search
+						</a>
+					</li>
+
+					<li class="p-b-9">
+						<a href="#" class="s-text7">
+							About Us
+						</a>
+					</li>
+
+					<li class="p-b-9">
+						<a href="#" class="s-text7">
+							Contact Us
+						</a>
+					</li>
+
+					<li class="p-b-9">
+						<a href="#" class="s-text7">
+							Returns
+						</a>
+					</li>
+				</ul>
+			</div>
+
+			<div class="w-size7 p-t-30 p-l-15 p-r-15 respon4">
+				<h4 class="s-text12 p-b-30">
+					Help
+				</h4>
+
+				<ul>
+					<li class="p-b-9">
+						<a href="#" class="s-text7">
+							Track Order
+						</a>
+					</li>
+
+					<li class="p-b-9">
+						<a href="#" class="s-text7">
+							Returns
+						</a>
+					</li>
+
+					<li class="p-b-9">
+						<a href="#" class="s-text7">
+							Shipping
+						</a>
+					</li>
+
+					<li class="p-b-9">
+						<a href="#" class="s-text7">
+							FAQs
+						</a>
+					</li>
+				</ul>
+			</div>
+
+			<div class="w-size8 p-t-30 p-l-15 p-r-15 respon3">
+				<h4 class="s-text12 p-b-30">
+					Newsletter
+				</h4>
+
+				<form>
+					<div class="effect1 w-size9">
+						<input class="s-text7 bg6 w-full p-b-5" type="text" name="email" placeholder="email@example.com">
+						<span class="effect1-line"></span>
+					</div>
+
+					<div class="w-size2 p-t-20">
+						<!-- Button -->
+						<button class="flex-c-m size2 bg4 bo-rad-23 hov1 m-text3 trans-0-4">
+							Subscribe
+						</button>
+					</div>
+
+				</form>
+			</div>
+		</div>
+
+		<div class="t-center p-l-15 p-r-15">
+			<a href="#">
+				<img class="h-size2" src="images/icons/paypal.png" alt="IMG-PAYPAL">
+			</a>
+
+			<a href="#">
+				<img class="h-size2" src="images/icons/visa.png" alt="IMG-VISA">
+			</a>
+
+			<a href="#">
+				<img class="h-size2" src="images/icons/mastercard.png" alt="IMG-MASTERCARD">
+			</a>
+
+			<a href="#">
+				<img class="h-size2" src="images/icons/express.png" alt="IMG-EXPRESS">
+			</a>
+
+			<a href="#">
+				<img class="h-size2" src="images/icons/discover.png" alt="IMG-DISCOVER">
+			</a>
+
+			<div class="t-center s-text8 p-t-20">
+				Copyright © 2018 All rights reserved. | This template is made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a>
+			</div>
+		</div>
+	</footer>
+
+
+	<!-- Back to top -->
+	<div class="btn-back-to-top bg0-hov" id="myBtn">
+		<span class="symbol-btn-back-to-top">
+			<i class="fa fa-angle-double-up" aria-hidden="true"></i>
+		</span>
+	</div>
+
+	<!-- Container Selection1 -->
+	<div id="dropDownSelect1"></div>
+
+	<script type="text/javascript" src="/assets/default/vendor/jquery/jquery-3.2.1.min.js"></script>
+	<script type="text/javascript" src="/assets/default/vendor/animsition/js/animsition.min.js"></script>
+	<script type="text/javascript" src="/assets/default/vendor/bootstrap/js/popper.js"></script>
+	<script type="text/javascript" src="/assets/default/vendor/bootstrap/js/bootstrap.min.js"></script>
+	<script type="text/javascript" src="/assets/default/vendor/select2/select2.min.js"></script>
+	<script type="text/javascript">
+		$(".selection-1").select2({
+			minimumResultsForSearch: 20,
+			dropdownParent: $('#dropDownSelect1')
+		});
+	</script>
+	<script type="text/javascript" src="/assets/default/vendor/slick/slick.min.js"></script>
+	<script type="text/javascript" src="/assets/default/js/slick-custom.js"></script>
+	<script type="text/javascript" src="/assets/default/vendor/countdowntime/countdowntime.js"></script>
+	<script type="text/javascript" src="/assets/default/vendor/lightbox2/js/lightbox.min.js"></script>
+	<script type="text/javascript" src="/assets/default/vendor/sweetalert/sweetalert.min.js"></script>
+	<script type="text/javascript">
+		$('.block2-btn-addcart').each(function(){
+			var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();
+			$(this).on('click', function(){
+				swal(nameProduct, "is added to cart !", "success");
+			});
+		});
+
+		$('.block2-btn-addwishlist').each(function(){
+			var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();
+			$(this).on('click', function(){
+				swal(nameProduct, "is added to wishlist !", "success");
+			});
+		});
+	</script>
+	<script src="/assets/default/js/main.js"></script>
 
 </body>
 </html>

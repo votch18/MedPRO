@@ -36,7 +36,7 @@ Config::set('db_username', 'root');
 
 Config::set('db_password', '');
 
-Config::set('db_name', 'lccc_db');
+Config::set('db_name', 'medpro_db');
 
 Config::set('limit', 20);
 
