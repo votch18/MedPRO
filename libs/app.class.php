@@ -28,11 +28,7 @@ class App{
             if ( !isset($access) && self::$router->getController() != 'login'){
                 Router::redirect('/admin/login/');
             }
-            /*
-            if ( !isset($access) && $controller_method != 'admin_logout'){
-                Router::redirect('/admin/users/login/');
-           }*/
-
+         
             if ( isset($access) &&
                 //!in_array(strtolower(self::$router->getController()), Session::get('pages')) &&
                 strtolower(self::$router->getController()) != 'home'){

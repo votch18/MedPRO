@@ -7,6 +7,7 @@ class HomeController extends Controller{
         $this->model = null;
     }
     public function index(){
+
     }
 
     public function admin_index(){
@@ -21,7 +22,4 @@ class HomeController extends Controller{
             }
         }
     }
-
-
-
 }
