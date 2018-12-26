@@ -66,21 +66,17 @@ class Product extends Model
 
             for ($i = 0; $i < count($images); $i++) {
 
-                //photos
-                $tmp = $images[$i];
-                $folder = "uploads/products/";
-            
-                $imagenew = $tmp;
-            
+                //photos              
+                $folder = "uploads/products/";            
+           
                 $allowed = array('jpeg', 'png', 'jpg');
-                $filename = $_FILES['file']['name'][$i];
-            
+                $filename = $_FILES['file']['name'][$i];            
                 
                 $ext=strtolower(pathinfo($filename, PATHINFO_EXTENSION)); 
                 if (!in_array($ext, $allowed)) {
                     } else {
                     move_uploaded_file($_FILES['file']['tmp_name'][$i], $folder.$filename);
-                    $filenames[] = $imagenew;
+                    $filenames[] = $filename;
                     
                     // //get image size and resize image if its too large
                     // list($width, $height) = getimagesize($path);
@@ -142,6 +138,30 @@ class Product extends Model
 
     public function delete($id){
         $sql = "DELETE FROM t_products WHERE prodid = '{$id}'";
+
+        return $this->db->query($sql);
+    }
+
+    public function addPhotos($id){
+       
+        $folder = "uploads/products/";
+        
+        $allowed = array('jpeg', 'png', 'jpg');
+        $filename = $_FILES['file']['name'];
+            
+        $ext=strtolower(pathinfo($filename, PATHINFO_EXTENSION)); 
+        if (in_array($ext, $allowed)) {
+
+            move_uploaded_file($_FILES['file']['tmp_name'], $folder.$filename);
+            $filenames[] = $filename;
+         
+        }
+        
+
+        $sql = "UPDATE t_products 
+            SET
+            images = CONCAT(images, ',', '{$filename}')
+            WHERE prodid = '{$id}'";
 
         return $this->db->query($sql);
     }

@@ -25,11 +25,32 @@ class ProductsController extends Controller{
         }
     }
 
+    public function myaccount_edit(){
+
+        $this->data = $this->model->getProductById($this->params[0]);
+
+        if ( $_POST ){           
+            if($this->model->save($_POST)) {                
+                Router::redirect('/products/');
+            } else {
+                Session::setFlash("<strong>Oh Snap!</strong> There was an error saving this record!");
+            }
+        }
+    }
+
     public function ajax_delete(){
         
         if(isset($_POST)){
               
             $this->data =  $this->model->delete( $_POST['id'] );
+        }
+    }
+
+    public function ajax_add_photos(){
+        
+        if(isset($_POST)){
+              
+            $this->data =  $this->model->addPhotos( $_POST['id'] );
         }
     }
 }

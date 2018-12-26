@@ -40,10 +40,10 @@
                         </div>                  
                     </div>
 
-                    <div class="col-6 text-center">
+                    <div class="col-6">
                        
                         <div class="form-group">
-                            <label for="" class="control-label mb-1">Add Photos</label>
+                            <label for="" class="control-label mb-1">Product Photos</label>
                             <div class="imgcon photo" id="dropzone" style="width: 100%; min-height: 350px; border-radius: 5px; padding: 10px; border: 1px solid rgba(0, 0, 0, .2);">
                             
                         

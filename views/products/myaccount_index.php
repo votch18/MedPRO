@@ -24,7 +24,7 @@
                     <td><?=$row['stocks']?></td>
                     <td>
                         <a href="#" class="btn btn-success"><i class="fa fa-plus"></i></a>
-                        <a href="#" class="btn btn-info"><i class="fa fa-edit"></i></a>
+                        <a href="/me/products/edit/<?=$row['prodid']?>" class="btn btn-info"><i class="fa fa-edit"></i></a>
                         <a href="#" class="btn btn-danger delete" id="<?=$row['prodid']?>"><i class="fa fa-trash"></i></a>
                     </td>
                 </tr>
