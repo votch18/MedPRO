@@ -108,13 +108,29 @@ $access = Session::get('access');
 
 				<!-- Header Icon -->
 				<div class="header-icons">
-					<a href="#" class="header-wrapicon1 dis-block">
+					<div class="header-wrapicon1 dis-block">
 						<?php if ( !$access ) { ?>
-							<a href="/signin/">Sign-in</a>
+							<a href="/login/">Sign-in</a>
 						<?php }else { ?>
-							<img src="/assets/default/images/icons/icon-header-01.png" class="header-icon1" alt="ICON">
+							<img src="/assets/default/images/icons/icon-header-01.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
+							<div class="header-cart header-dropdown">
+								<ul class="header-cart-wrapitem">
+									<li class="header-cart-item">
+										<div class="header-cart-item-txt">
+											<a href="#" class="header-cart-item-name">
+												Profile
+											</a>
+										</div>
+										<div class="header-cart-item-txt">
+											<a href="/admin/users/logout" class="header-cart-item-name">
+												Sign-out
+											</a>
+										</div>
+									</li>
+								</ul>
+							</div>
 						<?php } ?>
-					</a>
+					</div>
 
 					<span class="linedivide1"></span>
 

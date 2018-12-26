@@ -6,6 +6,18 @@ class LoginController extends Controller{
         parent::__construct($data);
         $this->model = new User();
     }
+
+    public function index(){
+        if ($_POST){
+            $account = new Account();
+            if ($account->loginAccount($_POST['username'], $_POST['password'])){
+                Router::redirect('/');
+            }else{
+                Session::setFlash("Invalid username or password!");
+            }
+        }
+    }
+
     public function admin_index(){
 
         if (Session::get('username') != null || Session::get('username') != ""){

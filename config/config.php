@@ -10,6 +10,8 @@ Config::set('routes', array(
 
     'admin' => 'admin_',
 
+    'me' => 'myaccount_',
+
     'ajax' => 'ajax_',
 
     'uploads' => 'upload_',

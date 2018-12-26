@@ -6,7 +6,7 @@ class Util extends Model {
         return substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);
     }
 
-    public static function generateRandomCode2($length = 4) {
+    public static function generateRandomCodeCapital($length = 4) {
         return substr(str_shuffle("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);
     }
 

@@ -52,10 +52,11 @@ class Account extends Model
             
             $log = new Log();
             $log->save('Log-in');
-        }else {
-            Session::setFlash("<strong>Oh Snap!</strong> An error occured while logging-in your account!");
+
+            return true;
         }
 
+        return false;
     }
 
     public function getByUserName($username){
@@ -68,6 +69,4 @@ class Account extends Model
         }
         return false;
     }
-
-
 }
