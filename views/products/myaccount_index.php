@@ -21,9 +21,9 @@
                     <td><?=$row['prodid']?></td>
                     <td><?=$row['name']?></td>
                     <td><?=$row['sku']?></td>
-                    <td><?=$row['stocks']?></td>
+                    <td class="stocks"><?=$row['stocks']?></td>
                     <td>
-                        <a href="#" class="btn btn-success"><i class="fa fa-plus"></i></a>
+                        <a href="#" class="btn btn-success addstocks" id="<?=$row['prodid']?>"><i class="fa fa-plus"></i></a>
                         <a href="/me/products/edit/<?=$row['prodid']?>" class="btn btn-info"><i class="fa fa-edit"></i></a>
                         <a href="#" class="btn btn-danger delete" id="<?=$row['prodid']?>"><i class="fa fa-trash"></i></a>
                     </td>
@@ -113,5 +113,59 @@
             }
         });
     }
+
+    
+	$('body').on('click', '.addstocks', function(e) {
+        e.preventDefault(); //prevent modal from closing
+
+        Swal({
+        title: 'Add stocks',
+        input: 'text',
+        inputAttributes: {
+            autocapitalize: 'off'
+        },
+        showCancelButton: true,
+        confirmButtonText: 'Save',
+        showLoaderOnConfirm: true,
+        preConfirm: (qty) => {
+            return  $.ajax({
+                type: 'POST',
+                url: '/ajax/products/addstocks/',
+                data: {id: $(this).attr('id'), qty: qty },
+                dataType: 'json',
+                crossDomain: true,
+                headers: {'X-Requested-With': 'XMLHttpRequest'},
+                success: function(response){
+                
+                    switch(response.message){
+                        case 'success': 
+                        break
+                
+                        case 'error':
+                            swal({
+                                title: "Error",
+                                text: "An error occured while saving your changes",
+                                type: "error",
+                                confirmButtonText: '',
+                                showCancelButton: true,
+                                showConfirmButton: false,
+                            });
+                        break
+                    }
+                }
+            })
+        },
+        allowOutsideClick: () => !Swal.isLoading()
+        }).then((result) => {
+        if (result.value) {
+
+           $data = JSON.parse(result.value);
+           var old_value = $(this).parent().parent().find(".stocks").text() == "" ? 0 :  $(this).parent().parent().find(".stocks").text();
+           $(this).parent().parent().find(".stocks").text( parseInt(old_value) + parseInt($data.qty));
+          
+        }
+        })
+        
+    });
 
 </script>

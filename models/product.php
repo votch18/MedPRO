@@ -50,11 +50,11 @@ class Product extends Model
         $UoM = $this->db->escape($data['UoM']);
 
         $custid = Session::get('userid');
-
+        $main_photo = $this->db->escape($data['main_photo']);
+        
         //upload photos
         $images = $_FILES['file']['name'];
       
-
         $prodid = Util::generateRandomCodeCapital(5).strtotime("now");
 
         $filenames = array();
@@ -66,7 +66,6 @@ class Product extends Model
 
             for ($i = 0; $i < count($images); $i++) {
 
-                //photos              
                 $folder = "uploads/products/";            
            
                 $allowed = array('jpeg', 'png', 'jpg');
@@ -76,30 +75,11 @@ class Product extends Model
                 if (!in_array($ext, $allowed)) {
                     } else {
                     move_uploaded_file($_FILES['file']['tmp_name'][$i], $folder.$filename);
-                    $filenames[] = $filename;
-                    
-                    // //get image size and resize image if its too large
-                    // list($width, $height) = getimagesize($path);
-                    // $img = new SimpleImage($path);
-                    
-                    // if ($width > $height){
-                    //     if ($width > 1024){
-                    //         // Resize the image to 1024px width and the proportional height
-                    //         $img->resizeToWidth(1024);
-                    //         $img->save($path);
-                    //     }
-                    // }else {
-                    //     if ($height > 1024){
-                    //         // Resize the image to 1024px width and the proportional height
-                    //         $img->resizeToWidth(1024);
-                    //         $img->save($path);
-                    //     }
-                    // }
-                }
-                
+                    $filenames[] = $filename;                 
+                }                
             }
 
-            $images = implode(",", $filenames);
+            $images = self::changeImageOrder($filenames);         
         
             $sql = "INSERT INTO `t_products` 
                 SET             
@@ -113,11 +93,27 @@ class Product extends Model
                 `UoM` = '{$UoM}'";
 
         }else{
-
+            $sql = "UPDATE `t_products` 
+                SET             
+                `name`= '{$name}',
+                `description`= '{$description}',
+                `sku`= '{$sku}',
+                `custid`= '{$custid}',
+                `UoM` = '{$UoM}'
+                WHERE prodid = '{$id}'";
         }
         
         return $this->db->query($sql);
 
+    }
+
+    public function changeImageOrder($filename){
+
+        $images = implode(",", $filenames);
+        $images = str_replace($main_photo, '', $images);
+        $images = str_replace(',,', ',', $images);
+
+        return $main_photo.','.$images;
     }
 
     public function checkDuplicateProduct($name){
@@ -142,7 +138,7 @@ class Product extends Model
         return $this->db->query($sql);
     }
 
-    public function addPhotos($id){
+    public function addPhoto($id){
        
         $folder = "uploads/products/";
         
@@ -153,8 +149,7 @@ class Product extends Model
         if (in_array($ext, $allowed)) {
 
             move_uploaded_file($_FILES['file']['tmp_name'], $folder.$filename);
-            $filenames[] = $filename;
-         
+            $filenames[] = $filename;         
         }
         
 
@@ -162,6 +157,60 @@ class Product extends Model
             SET
             images = CONCAT(images, ',', '{$filename}')
             WHERE prodid = '{$id}'";
+
+        return $this->db->query($sql);
+    }
+
+    public function deletePhoto($image, $id){
+       
+        $path = "/uploads/products/";
+
+        if(file_exists($path.$image)){
+            unlink(realpath($path.$image));
+        }
+
+        $sql = "UPDATE t_products 
+            SET
+            images =  REPLACE(REPLACE(images, '{$image}', ''), ',,', ',')
+            WHERE prodid = '{$id}'";
+
+        return $this->db->query($sql);
+    }
+
+    public function saveMainPhoto($image, $id){
+       
+       
+        $sql = "UPDATE t_products 
+            SET
+            images =  REPLACE(
+                CONCAT('{$image}', ',', 
+                    REPLACE(images, '{$image}', '')
+                ), 
+                ',,', ',')
+            WHERE prodid = '{$id}'";
+
+        return $this->db->query($sql);
+    }
+
+    public function saveStocks($data, $id = null){
+        $prodid = $data['id'];
+        $qty = $data['qty'];
+        //$remarks = $data['remarks'];
+
+        if (!$id){
+            $sql = "INSERT INTO `t_stocks` 
+                SET 
+                `prodid`= '{$prodid}',
+                `qty`= '{$qty}',
+                `date`= NOW()
+                ";
+        } else{
+            $sql = "UPDATE `t_stocks` 
+                SET              
+                `qty`= '{$qty}',
+                `date`= NOW()
+                WHERE `prodid`= '{$prodid}'";
+        }
 
         return $this->db->query($sql);
     }
