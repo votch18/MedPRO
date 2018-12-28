@@ -21,7 +21,11 @@
                             <textarea class="form-control" rows="6" name="description"></textarea>
                         </div>
                         <div class="form-group">
-                            <label for="description" class="control-label mb-1">Unif of Measure</label>
+                            <label for="price" class="control-label mb-1">Price</label>
+                            <input name="price" type="number" class="form-control" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="UoM" class="control-label mb-1">Unif of Measure</label>
                             <select name="UoM" class="form-control">
                                 <?php 
                                 $prod = new Product();
@@ -33,6 +37,21 @@
                                 <?php } ?>
                             </select>
                         </div>
+
+                        <div class="form-group">
+                            <label for="category" class="control-label mb-1">Category</label>
+                            <select name="category" class="form-control">
+                                <?php 
+                                $prod = new Product();
+                                $res = $prod->getProductCategory();
+                                
+                                foreach($res as $row) { 
+                                ?>
+                                <option value="<?=$row['lid']?>"><?=$row['description']?></option>
+                                <?php } ?>
+                            </select>
+                        </div>
+                        
                         <div>
                             <button type="submit" class="btn btn-lg btn-info btn-block">
                                 <span>Save</span>

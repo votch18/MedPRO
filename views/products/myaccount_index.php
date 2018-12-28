@@ -10,17 +10,23 @@
                     <th>#</th>
                     <th>product</th>
                     <th>SKU</th>
+                    <th>Price</th>
                     <th>Stocks</th>
                     <th>Action</th>
                 </tr>
             </thead>
             <tbody>
 
-            <?php foreach($this->data as $row) { ?>
+            <?php 
+                $count = 0;
+                foreach($this->data as $row) { 
+                    $count++;
+                ?>
                 <tr>
                     <td><?=$row['prodid']?></td>
                     <td><?=$row['name']?></td>
                     <td><?=$row['sku']?></td>
+                    <td><?=$row['price']?></td>
                     <td class="stocks"><?=$row['stocks']?></td>
                     <td>
                         <a href="#" class="btn btn-success addstocks" id="<?=$row['prodid']?>"><i class="fa fa-plus"></i></a>

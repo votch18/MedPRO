@@ -2,6 +2,10 @@
 
 class Product extends Model
 {
+    /**
+     * Status: 1=Pending; 2=Approved; 3=Deleted
+     */
+
 
     public function getProducts(){
         $sql = "SELECT * FROM t_products";
@@ -9,21 +13,40 @@ class Product extends Model
         return $this->db->query($sql);
     }
 
+    public function getApprovedProducts(){
+        $sql = "SELECT * FROM t_products WHERE status = 1";
+
+        return $this->db->query($sql);
+    }
+
     public function getProductsByCustomer(){
         $custid = Session::get("userid");
-        $sql = "SELECT a.prodid, a.name, a.description, a.sku, a.UoM,
+        $sql = "SELECT a.prodid, a.name, a.description, a.sku, a.UoM, a.price,
             SUM(b.qty) as stocks
             FROM t_products a 
             LEFT JOIN t_stocks b on b.prodid = a.prodid
             WHERE a.custid = '{$custid}'
             GROUP BY a.prodid, a.name, a.description, a.sku, a.UoM
+            ORDER BY a.name
             ";
 
         return $this->db->query($sql);
     }
 
+    public static function getSellerIdByProduct($prodid){
+        $product = new Product();
+        $products = $product->getProductById($prodid);
+        return $products['custid'];
+    }
+
     public function getUnitofMeasure(){
         $sql = "select * from l_unit_of_measure";
+
+        return $this->db->query($sql);
+    }
+
+    public function getProductCategory(){
+        $sql = "select * from l_product_category";
 
         return $this->db->query($sql);
     }
@@ -47,6 +70,8 @@ class Product extends Model
         $name = $this->db->escape($data['name']);
         $description = $this->db->escape($data['description']);
         $sku = $this->db->escape($data['sku']);
+        $category = $this->db->escape($data['category']);
+        $price = $this->db->escape($data['price']);
         $UoM = $this->db->escape($data['UoM']);
 
         $custid = Session::get('userid');
@@ -64,10 +89,11 @@ class Product extends Model
             //check member for duplication
             if (self::checkDuplicateProduct($name)) return false;
 
+        
             for ($i = 0; $i < count($images); $i++) {
 
                 $folder = "uploads/products/";            
-           
+            
                 $allowed = array('jpeg', 'png', 'jpg');
                 $filename = $_FILES['file']['name'][$i];            
                 
@@ -78,8 +104,10 @@ class Product extends Model
                     $filenames[] = $filename;                 
                 }                
             }
+        
+           
 
-            $images = self::changeImageOrder($filenames);         
+            $images = self::changeImageOrder($filenames, $main_photo);         
         
             $sql = "INSERT INTO `t_products` 
                 SET             
@@ -87,6 +115,8 @@ class Product extends Model
                 `name`= '{$name}',
                 `description`= '{$description}',
                 `sku`= '{$sku}',
+                `category`= '{$category}',
+                `price`= '{$price}',
                 `custid`= '{$custid}',
                 `images`='{$images}',
                 `date` = NOW(),
@@ -98,6 +128,8 @@ class Product extends Model
                 `name`= '{$name}',
                 `description`= '{$description}',
                 `sku`= '{$sku}',
+                `category`= '{$category}',
+                `price`= '{$price}',
                 `custid`= '{$custid}',
                 `UoM` = '{$UoM}'
                 WHERE prodid = '{$id}'";
@@ -107,7 +139,14 @@ class Product extends Model
 
     }
 
-    public function changeImageOrder($filename){
+    /**
+     * Set main image
+     * @$filename array
+     * @return string separated by comma
+     */
+    public function changeImageOrder($filename, $main_photo){
+
+        if (count($filename) == 1) return implode(",", $filename);
 
         $images = implode(",", $filenames);
         $images = str_replace($main_photo, '', $images);
@@ -115,6 +154,8 @@ class Product extends Model
 
         return $main_photo.','.$images;
     }
+
+
 
     public function checkDuplicateProduct($name){
 

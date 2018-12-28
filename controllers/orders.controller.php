@@ -1,14 +1,14 @@
 <?php
 
-class ProductsController extends Controller{
+class OrdersController extends Controller{
 
     public function __construct($data = array()){
         parent::__construct($data);
-        $this->model = new Product();
+        $this->model = new Order();
     }
 
     public function index(){
-        $this->data = $this->model->getApprovedProducts();
+        $this->data = $this->model->getOrders();
     }
 
     public function myaccount_index(){
@@ -38,41 +38,24 @@ class ProductsController extends Controller{
         }
     }
 
-    public function ajax_delete(){
-        
-        if(isset($_POST)){
-              
+    public function ajax_removeitem(){        
+        if(isset($_POST)){              
             $this->data =  $this->model->delete( $_POST['id'] );
         }
     }
 
-    public function ajax_add_photo(){
-        
-        if(isset($_POST)){
-              
-            $this->data =  $this->model->addPhoto( $_POST['id'] );
-        }
-    }
 
-    public function ajax_delete_photo(){
-        
-        if(isset($_POST)){
-              
-            $this->data =  $this->model->deletePhoto( $_POST['image'],  $_POST['id']);
-        }
-    }
-
-    public function ajax_save_main_photo(){
-        
-        if(isset($_POST)){              
-            $this->data =  $this->model->saveMainPhoto( $_POST['image'],  $_POST['id'] );
-        }
-    }
-
-    public function ajax_addstocks(){
+    public function ajax_additem(){
         if(isset($_POST)){       
-            $this->model->saveStocks( $_POST );       
-            $this->data =  json_encode( array('qty' => $_POST['qty']) );
+            $this->model->save( $_POST );       
+            $this->data =  json_encode( array('qty' => '1') );
+        }
+    }
+
+    public function ajax_getorders(){
+        if(isset($_GET)){       
+            $data = $this->model->getOrderCountByCustomer( $_GET );       
+            $this->data =  json_encode( array('message' => $data['count']) );
         }
     }
 }

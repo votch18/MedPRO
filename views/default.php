@@ -20,12 +20,16 @@ $access = Session::get('access');
 	<link rel="stylesheet" type="text/css" href="/assets/default/vendor/animate/animate.css">
 	<link rel="stylesheet" type="text/css" href="/assets/default/vendor/css-hamburgers/hamburgers.min.css">
 	<link rel="stylesheet" type="text/css" href="/assets/default/vendor/animsition/css/animsition.min.css">
+	<link rel="stylesheet" type="text/css" href="/assets/default/vendor/daterangepicker/daterangepicker.css">	
 	<link rel="stylesheet" type="text/css" href="/assets/default/vendor/select2/select2.min.css">
-	<link rel="stylesheet" type="text/css" href="/assets/default/vendor/daterangepicker/daterangepicker.css">
 	<link rel="stylesheet" type="text/css" href="/assets/default/vendor/slick/slick.css">
 	<link rel="stylesheet" type="text/css" href="/assets/default/vendor/lightbox2/css/lightbox.min.css">
+	<link rel="stylesheet" type="text/css" href="/assets/default/vendor/noui/nouislider.min.css">
 	<link rel="stylesheet" type="text/css" href="/assets/default/css/util.css">
 	<link rel="stylesheet" type="text/css" href="/assets/default/css/main.css">
+
+	<script type="text/javascript" src="/assets/default/vendor/jquery/jquery-3.2.1.min.js"></script>	
+	<script type="text/javascript" src="/assets/default/vendor/sweetalert/sweetalert.min.js"></script>
 </head>
 <body class="animsition">
 
@@ -583,8 +587,10 @@ $access = Session::get('access');
 
 	<!-- Container Selection1 -->
 	<div id="dropDownSelect1"></div>
+	<!-- Container Selection1 -->
+	<div id="dropDownSelect2"></div>
 
-	<script type="text/javascript" src="/assets/default/vendor/jquery/jquery-3.2.1.min.js"></script>
+	
 	<script type="text/javascript" src="/assets/default/vendor/animsition/js/animsition.min.js"></script>
 	<script type="text/javascript" src="/assets/default/vendor/bootstrap/js/popper.js"></script>
 	<script type="text/javascript" src="/assets/default/vendor/bootstrap/js/bootstrap.min.js"></script>
@@ -594,28 +600,73 @@ $access = Session::get('access');
 			minimumResultsForSearch: 20,
 			dropdownParent: $('#dropDownSelect1')
 		});
+
+		$(".selection-2").select2({
+			minimumResultsForSearch: 20,
+			dropdownParent: $('#dropDownSelect2')
+		});
 	</script>
 	<script type="text/javascript" src="/assets/default/vendor/slick/slick.min.js"></script>
 	<script type="text/javascript" src="/assets/default/js/slick-custom.js"></script>
 	<script type="text/javascript" src="/assets/default/vendor/countdowntime/countdowntime.js"></script>
 	<script type="text/javascript" src="/assets/default/vendor/lightbox2/js/lightbox.min.js"></script>
-	<script type="text/javascript" src="/assets/default/vendor/sweetalert/sweetalert.min.js"></script>
+	<script type="text/javascript" src="/assets/default/vendor/noui/nouislider.min.js"></script>
 	<script type="text/javascript">
-		$('.block2-btn-addcart').each(function(){
-			var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();
-			$(this).on('click', function(){
-				swal(nameProduct, "is added to cart !", "success");
-			});
-		});
+		/*[ No ui ]
+	    ===========================================================*/
+	    var filterBar = document.getElementById('filter-bar');
 
-		$('.block2-btn-addwishlist').each(function(){
-			var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();
-			$(this).on('click', function(){
-				swal(nameProduct, "is added to wishlist !", "success");
-			});
-		});
+	    noUiSlider.create(filterBar, {
+	        start: [ 50, 200 ],
+	        connect: true,
+	        range: {
+	            'min': 50,
+	            'max': 200
+	        }
+	    });
+
+	    var skipValues = [
+	    document.getElementById('value-lower'),
+	    document.getElementById('value-upper')
+	    ];
+
+	    filterBar.noUiSlider.on('update', function( values, handle ) {
+	        skipValues[handle].innerHTML = Math.round(values[handle]) ;
+	    });
 	</script>
 	<script src="/assets/default/js/main.js"></script>
+
+	<?php 
+		if ( Session::get('userid') != null ) {
+	?>
+	<script>
+		function getOrders(){
+			
+			return $.ajax({
+				type: 'GET',
+				url: '/ajax/orders/getorders/',
+				data: { prodid: "<?=Session::get('userid')?>" },
+				dataType: 'json',
+				crossDomain: true,
+				headers: {'X-Requested-With': 'XMLHttpRequest'},
+				success: function (response) {
+					if (response) {    
+						console.log(response);   
+					}
+				}
+			});
+		}
+
+		setInterval(() => {
+			getOrders().done(function($data) {
+				$data = JSON.parse($data);
+				$qty = $data.message;
+				$('.header-icons-noti').text( $qty );
+			});
+		}, 1000);
+	</script>
+
+	<?php } ?>
 
 </body>
 </html>
