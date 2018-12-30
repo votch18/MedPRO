@@ -99,6 +99,20 @@ class ProductsController extends Controller{
     public function ajax_approve_product(){
         if(isset($_POST)){       
             $this->model->approveProduct( $_POST['prodid'] );    
+            
+            //get product details
+            $product = $this->model->getProductById( $_POST['prodid'] );
+            $message = 'Your product: '.$product['name'].' has been approved.';
+            
+            $data = array(
+                'custid' => $product['custid'],
+                'message' => $message
+            );
+
+            //add notification
+            $note = new Notification();
+            $note->save($data);
+
             $this->data =  json_encode( array('message' => 'success') );
         }
     }

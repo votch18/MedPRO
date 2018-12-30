@@ -649,7 +649,7 @@ $access = Session::get('access');
 			return $.ajax({
 				type: 'POST',
 				url: '/ajax/orders/getorders/',
-				data: { prodid: "<?=Session::get('userid')?>" },
+				data: { id: "<?=Session::get('userid')?>" },
 				dataType: 'json',
 				crossDomain: true,
 				headers: {'X-Requested-With': 'XMLHttpRequest'},

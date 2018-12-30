@@ -14,24 +14,20 @@ class MessagesController extends Controller{
 
     /** End Admin Pages */
 
-    /** Ajax Request */
-    public function ajax_removeitem(){        
-        if( isset($_POST) ){              
-            $this->data =  $this->model->delete( $_POST['id'] );
+    /** Ajax Request Myaccount*/
+   
+    public function ajax_getnotifications(){
+        if( isset($_POST) ){       
+            $note = new Notification();       
+            $this->data =  json_encode( $note->getNotificationsByCustomerId($_POST['id']) );
         }
     }
 
-    public function ajax_additem(){
+     
+    public function ajax_readnotifications(){
         if( isset($_POST) ){       
-            $this->model->save( $_POST );       
-            $this->data =  json_encode( array('qty' => '1') );
-        }
-    }
-
-    public function ajax_getorders(){
-        if( isset($_POST) ){       
-            $data = $this->model->getOrderCountByCustomer( $_POST );       
-            $this->data =  json_encode( array('message' => $data['count']) );
+            $note = new Notification();       
+            $this->data =  json_encode( $note->mark_as_read($_POST['id']) );
         }
     }
     /** End Ajax Request */

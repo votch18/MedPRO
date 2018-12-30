@@ -62,42 +62,10 @@
                         </a>
                     </div>
                     <div class="header__tool">
-                        <div class="header-button-item has-noti js-item-menu">
+                        <div id="noti_indicator" class="header-button-item js-item-menu noti_indicator">
                             <i class="zmdi zmdi-notifications"></i>
-                            <div class="notifi-dropdown js-dropdown">
-                                <div class="notifi__title">
-                                    <p>You have 3 Notifications</p>
-                                </div>
-                                <div class="notifi__item">
-                                    <div class="bg-c1 img-cir img-40">
-                                        <i class="zmdi zmdi-email-open"></i>
-                                    </div>
-                                    <div class="content">
-                                        <p>You got a email notification</p>
-                                        <span class="date">April 12, 2018 06:50</span>
-                                    </div>
-                                </div>
-                                <div class="notifi__item">
-                                    <div class="bg-c2 img-cir img-40">
-                                        <i class="zmdi zmdi-account-box"></i>
-                                    </div>
-                                    <div class="content">
-                                        <p>Your account has been blocked</p>
-                                        <span class="date">April 12, 2018 06:50</span>
-                                    </div>
-                                </div>
-                                <div class="notifi__item">
-                                    <div class="bg-c3 img-cir img-40">
-                                        <i class="zmdi zmdi-file-text"></i>
-                                    </div>
-                                    <div class="content">
-                                        <p>You got a new file</p>
-                                        <span class="date">April 12, 2018 06:50</span>
-                                    </div>
-                                </div>
-                                <div class="notifi__footer">
-                                    <a href="#">All notifications</a>
-                                </div>
+                            <div id="notifications" class="notifi-dropdown js-dropdown">
+                                <!--ajax content here-->
                             </div>
                         </div>
                         <div class="header-button-item js-item-menu">
@@ -361,6 +329,11 @@
         <!-- END PAGE CONTENT  -->
     </div>       
 
+    <audio id="pop">
+        <source src="/assets/audio/get-outta-here.mp3" type="audio/mpeg">
+    </audio>
+
+
     <?php } ?>
              
    
@@ -385,56 +358,119 @@
 
     <!-- Main JS-->
     <script src="/assets/admin/js/main.js"></script>
+    <?php 
+		
+		if ( Session::get('userid') != null ) {			
+	?>
+	<script>
+		/**
+		 * if logged-in fetch for customer's order or pending order
+		 */
+		function getNotifications(){
+			
+			return $.ajax({
+				type: 'POST',
+				url: '/ajax/messages/getnotifications/',
+				data: { id: "<?=Session::get('userid')?>" },
+				dataType: 'json',
+				crossDomain: true,
+				headers: {'X-Requested-With': 'XMLHttpRequest'},
+				success: function (response) {
+					if (response) {    
+					}
+				}
+			});
+		}
 
-
-            <script>
-          
-            //delete data in any table with id = ataTable
-            $('#dataTable tbody').on( 'click', '.btn-delete', function (e) {
-                e.preventDefault();
-                var url = $(this).attr('href');
-
-                swal({
-                    title: 'Are you sure?',
-                    text: "You won't be able to revert this!",
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, delete it!'
-                }).then((result) => {
+		/**
+		 * fetch order's every second and display to cart
+		 */
+		setInterval(() => {
+			getNotifications().done(function($data) {
+				$data = JSON.parse($data);
                 
-                    if (result.value) {
-                        //proceed to deletion
-                        window.location = url;
-                    }
-                    
-                });
-            } );
+                $('#notifications').html('');
 
-
-              //restore member 
-              $('#dataTable tbody').on( 'click', '.btn-restore', function (e) {
-                e.preventDefault();
-                var url = $(this).attr('href');
-
-                swal({
-                    title: 'Are you sure?',
-                    text: "",
-                    type: 'warning',
-                    showCancelButton: true,
-                    confirmButtonColor: '#3085d6',
-                    cancelButtonColor: '#d33',
-                    confirmButtonText: 'Yes, restore it!'
-                }).then((result) => {
+                var $count = 0;
+                var noti_content = '';
                 
-                    if (result.value) {
-                        //proceed to deletion
-                        window.location = url;
-                    }
+
+                console.log($data);
+                $.each( $data, function(index, value){
+                    $count += (value.is_read == '0') ? 1 : 0;
+
+                    var $date = new Date(Date.parse(value.date));
+                    var today = new Date();                   
+                    var time_diff = Math.abs($date.getTime() - today.getTime());
                     
-                });
-            } );
-        </script>
+                    //play sound 
+                    if(value.is_read == '0' && (time_diff < 1000 && time_diff > -1000)){
+                        $('audio#pop')[0].play();
+                    }
+                    noti_content += '<div class="notifi__item">' +
+                                    '<div class="bg-c1 img-cir img-40">' +
+                                        '<i class="zmdi zmdi-email-open"></i>' +
+                                    '</div>' +
+                                    '<div class="content">' +
+                                        '<p>' + value.message + '</p>' +
+                                        '<span class="date">' + $date.toLocaleDateString() + ' ' + $date.toLocaleTimeString() + '</span>' +
+                                    '</div>' +
+                                '</div>';
+                             
+                } );
+
+                var s = $count > 1 ? 's' : '';
+                var noti_title ='<div class="notifi__title">' + 
+                                    '<p>You have ' +$count + ' unread notification' + s + '</p>' +
+                                '</div>';
+                var noti_footer = '<div class="notifi__footer">' +
+                                    '<a href="#">All notifications</a>' +
+                                '</div>';
+
+                
+                if ($count > 0 ) {
+                    $('#noti_indicator').addClass('has-noti');
+                } else {
+                    $('#noti_indicator').removeClass('has-noti');
+                }
+
+				$('#notifications').append(noti_title);
+                $('#notifications').append(noti_content);
+                $('#notifications').append(noti_footer);
+
+			});
+		}, 1000);
+
+        /** Notification button is click */
+        $('#noti_indicator').on('click', function(e){
+            setTimeout(() => {
+                readNotification();
+            }, 5000);
+            
+        });
+
+        /**
+		 * mark all notifications as read
+		 */
+		function readNotification(){
+			
+			return $.ajax({
+				type: 'POST',
+				url: '/ajax/messages/readnotifications/',
+				data: { id: "<?=Session::get('userid')?>" },
+				dataType: 'json',
+				crossDomain: true,
+				headers: {'X-Requested-With': 'XMLHttpRequest'},
+				success: function (response) {
+					if (response) {    
+					}
+				}
+			});
+		}
+
+	</script>
+
+	<?php } ?>
+
 </body>
 </html>

@@ -67,10 +67,6 @@
                     id: $(this).attr('id'),
                 }
                 
-                //save changes to database
-                //deletePicture(delImg);
-                
-                
                 if (deleteProduct(product)) {
                     swal(
                     'Deleted!',

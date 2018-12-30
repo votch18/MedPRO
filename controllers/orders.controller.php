@@ -54,7 +54,7 @@ class OrdersController extends Controller{
 
     public function ajax_getorders(){
         if( isset($_POST) ){       
-            $data = $this->model->getOrderCountByCustomer( $_POST );       
+            $data = $this->model->getOrderCountByCustomer();       
             $this->data =  json_encode( array('message' => $data['count']) );
         }
     }
