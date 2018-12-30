@@ -229,7 +229,4 @@ class User extends Model {
         return false;
     }
 
-    public static function generateRandomCode($length = 50) {
-        return substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);
-    }
 }

@@ -19,32 +19,14 @@ class App{
         $controller_class = ucfirst(self::$router->getController()).'Controller';
         $controller_method = strtolower(self::$router->getMethodPrefix().self::$router->getAction());
 
-
         $layout = self::$router->getRoute();
         $access = Session::get('access');
-
      
         if ($layout == 'admin'){
             if ( !isset($access) && self::$router->getController() != 'login'){
                 Router::redirect('/admin/login/');
-            }
-         
-            if ( isset($access) &&
-                //!in_array(strtolower(self::$router->getController()), Session::get('pages')) &&
-                strtolower(self::$router->getController()) != 'home'){
-
-                if ((self::$router->getController() == 'users') &&
-                    ($controller_method == 'admin_account_edit' ||
-                        $controller_method == 'admin_change_password')){
-                    //do nothing
-                }else {
-                    Router::redirect('/admin/');
-                }
-
-            }
+            }         
         }
-
-
 
         $controller_object = new $controller_class();
         if (method_exists($controller_object, $controller_method)) {
@@ -68,7 +50,6 @@ class App{
                     $view = new View($content);
                     $view->render($layout_path);
                 }
-
             }
 
         }else{

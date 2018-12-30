@@ -11,6 +11,25 @@ class ProductsController extends Controller{
         $this->data = $this->model->getApprovedProducts();
     }
 
+  
+    public function detail(){
+
+        if ( isset($this->params[0]) ) {
+            //add visits to track most popular products
+            $this->model->saveVisits($this->params[0]);
+
+            $this->data = $this->model->getProductById($this->params[0]);
+        }
+       
+    }
+
+    /** Start Admin Pages */
+    public function admin_index(){
+        $this->data = $this->model->getProducts();
+    }
+
+    /** End Admin Pages */
+
     public function myaccount_index(){
         $this->data = $this->model->getProductsByCustomer();
     }

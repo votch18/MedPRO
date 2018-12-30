@@ -235,6 +235,7 @@
           <div class="page-container3">
             <section class="alert-wrap p-t-70 p-b-70">
                 <div class="container">
+                    <?php if ( Session::hasFlash() ) { ?>
                     <!-- ALERT-->
                     <div class="alert au-alert-success alert-dismissible fade show au-alert au-alert--70per" role="alert">
                         <i class="zmdi zmdi-check-circle"></i>
@@ -246,6 +247,7 @@
                         </button>
                     </div>
                     <!-- END ALERT-->
+                    <?php } ?>
                 </div>
             </section>
             <section>
@@ -257,57 +259,24 @@
                                 <nav class="navbar-sidebar2 navbar-sidebar3">
                                     <ul class="list-unstyled navbar__list">
                                         <li class="active has-sub">
-                                            <a class="js-arrow" href="#">
-                                                <i class="fas fa-tachometer-alt"></i>Dashboard 4
-                                                <span class="arrow">
-                                                    <i class="fas fa-angle-down"></i>
-                                                </span>
-                                            </a>
-                                            <ul class="list-unstyled navbar__sub-list js-sub-list">
-                                                <li>
-                                                    <a href="index.html">Dashboard 1</a>
-                                                </li>
-                                                <li>
-                                                    <a href="index2.html">Dashboard 2</a>
-                                                </li>
-                                                <li>
-                                                    <a href="index3.html">Dashboard 3</a>
-                                                </li>
-                                                <li>
-                                                    <a href="index4.html">Dashboard 4</a>
-                                                </li>
-                                            </ul>
+                                            <a class="js-arrow" href="/admin/">
+                                                <i class="fas fa-tachometer-alt"></i>Dashboard                                               
+                                            </a>                                           
                                         </li>
                                         <li>
-                                            <a href="inbox.html">
+                                            <a href="/admin/messages/">
                                                 <i class="fas fa-chart-bar"></i>Inbox</a>
                                             <span class="inbox-num">3</span>
                                         </li>
                                         <li>
-                                            <a href="#">
-                                                <i class="fas fa-shopping-basket"></i>eCommerce</a>
+                                            <a href="/admin/products/">
+                                                <i class="fas fa-shopping-basket"></i>Products
+                                            </a>
                                         </li>
                                         <li class="has-sub">
                                             <a class="js-arrow" href="#">
-                                                <i class="fas fa-trophy"></i>Features
-                                                <span class="arrow">
-                                                    <i class="fas fa-angle-down"></i>
-                                                </span>
-                                            </a>
-                                            <ul class="list-unstyled navbar__sub-list js-sub-list">
-                                                <li>
-                                                    <a href="table.html">Tables</a>
-                                                </li>
-                                                <li>
-                                                    <a href="form.html">Forms</a>
-                                                </li>
-                                                <li>
-                                                    <a href="#">Calendar</a>
-                                                </li>
-                                                <li>
-                                                    <a href="map.html">Maps</a>
-                                                </li>
-                                            </ul>
+                                                <i class="fas fa-trophy"></i>Ratings                                                
+                                            </a>                                            
                                         </li>
                                         <li class="has-sub">
                                             <a class="js-arrow" href="#">

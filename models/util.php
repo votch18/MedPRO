@@ -2,41 +2,46 @@
 
 class Util extends Model {
 
+     /**
+     * @param $length integer
+     * @return random characters
+     */
     public static function generateRandomCode($length = 50) {
         return substr(str_shuffle("0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);
     }
 
+    /**
+     * @param $length integer
+     * @return random characters capitalized only
+     */
     public static function generateRandomCodeCapital($length = 4) {
         return substr(str_shuffle("0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ"), 0, $length);
     }
 
-    public static function n_format($value, $decimal = 2){
-
-        return number_format((float)$value, $decimal, '.', ',');
-    }
-
+    /**
+     * @param $value mixed
+     * @param $decimal integer
+     * @return 
+     */
     public static function number_format($value, $decimal = 2){
-
         return number_format((float)$value, $decimal, '.', ',');
     }
-	
-
-    public static function d_format($value){
-
-        return date_format(new DateTime($value), 'Y/m/d');
+	    
+    /**
+     * @param $value string
+     * @param $format string {'Y/m/d h:m A', 'Y/m/d', etc.}
+     * @return formated date string
+     */
+    public static function date_format($value, $format = 'Y-m-d'){
+        return date_format(new DateTime($value), $format);
     }
 
-    public static function d_format2($value){
-
-        return date_format(new DateTime($value), 'Y/m/d h:m A');
-    }
-	
-    public static function date_format($value){
-
-        return date_format(new DateTime($value), 'Y-m-d');
-    }
-
-    public function NumbertoWords($number){
+    /**
+     * convert number to words
+     * @param $number mixed
+     * @return string
+     */
+    public static function NumbertoWords($number){
 
         //get whole number
         $wholenumber = floor($number);
@@ -47,6 +52,49 @@ class Util extends Model {
 
         $formater = new NumberFormatter("en", NumberFormatter::SPELLOUT);
         return  $formater->format($wholenumber).' Pesos '.$decimal;   // outpout : five hundred sixty-six thousand five hundred sixty
+    }
+
+    /**
+     * get ip address of client/visitor
+     * @return ipaddress
+     */
+    public static function getIpAddress(){
+        // Get real visitor IP behind CloudFlare network
+        if (isset($_SERVER["HTTP_CF_CONNECTING_IP"])) {
+            $_SERVER['REMOTE_ADDR'] = $_SERVER["HTTP_CF_CONNECTING_IP"];
+            $_SERVER['HTTP_CLIENT_IP'] = $_SERVER["HTTP_CF_CONNECTING_IP"];
+        }
+        $client  = @$_SERVER['HTTP_CLIENT_IP'];
+        $forward = @$_SERVER['HTTP_X_FORWARDED_FOR'];
+        $remote  = $_SERVER['REMOTE_ADDR'];
+
+        if(filter_var($client, FILTER_VALIDATE_IP)){
+            $ip = $client;
+        } elseif(filter_var($forward, FILTER_VALIDATE_IP)){
+            $ip = $forward;
+        }else{
+            $ip = $remote;
+        }
+
+        return $ip;
+    }
+
+    /**
+     * get browser name of client/visitor
+     * @return string
+     */
+    public static function getBrowserName()
+    {
+        $user_agent = $_SERVER['HTTP_USER_AGENT'];
+
+        if (strpos($user_agent, 'Opera') || strpos($user_agent, 'OPR/')) return 'Opera';
+        elseif (strpos($user_agent, 'Edge')) return 'Microsoft Edge';
+        elseif (strpos($user_agent, 'Chrome')) return 'Google Chrome';
+        elseif (strpos($user_agent, 'Safari')) return 'Safari';
+        elseif (strpos($user_agent, 'Firefox')) return 'Mozilla Firefox';
+        elseif (strpos($user_agent, 'MSIE') || strpos($user_agent, 'Trident/7')) return 'Internet Explorer';
+        
+        return 'Other';
     }
 
     public static function draw_calendar($month,$year, $check_in, $check_out){

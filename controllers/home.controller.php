@@ -10,6 +10,10 @@ class HomeController extends Controller{
 
     }
 
+    public function about(){
+
+    }
+
     public function admin_index(){
         $user = new User();
         $this->data = $user->getByUserId(Session::get('userid'));;

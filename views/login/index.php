@@ -1,7 +1,7 @@
 <!-- Title Page -->
 <section class="bg-title-page p-t-40 p-b-50 flex-col-c-m" style="background-image: url(images/heading-pages-06.jpg); background-color: #D3D3D3;">
 		<h2 class="l-text2 t-center">
-			Sign-up
+			Sign-in
 		</h2>
 	</section>
 

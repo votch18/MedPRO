@@ -637,13 +637,17 @@ $access = Session::get('access');
 	<script src="/assets/default/js/main.js"></script>
 
 	<?php 
-		if ( Session::get('userid') != null ) {
+		
+		if ( Session::get('userid') != null ) {			
 	?>
 	<script>
+		/**
+		 * if logged-in fetch for customer's order or pending order
+		 */
 		function getOrders(){
 			
 			return $.ajax({
-				type: 'GET',
+				type: 'POST',
 				url: '/ajax/orders/getorders/',
 				data: { prodid: "<?=Session::get('userid')?>" },
 				dataType: 'json',
@@ -657,6 +661,9 @@ $access = Session::get('access');
 			});
 		}
 
+		/**
+		 * fetch order's every second and display to cart
+		 */
 		setInterval(() => {
 			getOrders().done(function($data) {
 				$data = JSON.parse($data);

@@ -39,22 +39,22 @@ class OrdersController extends Controller{
     }
 
     public function ajax_removeitem(){        
-        if(isset($_POST)){              
+        if( isset($_POST) ){              
             $this->data =  $this->model->delete( $_POST['id'] );
         }
     }
 
 
     public function ajax_additem(){
-        if(isset($_POST)){       
+        if( isset($_POST) ){       
             $this->model->save( $_POST );       
             $this->data =  json_encode( array('qty' => '1') );
         }
     }
 
     public function ajax_getorders(){
-        if(isset($_GET)){       
-            $data = $this->model->getOrderCountByCustomer( $_GET );       
+        if( isset($_POST) ){       
+            $data = $this->model->getOrderCountByCustomer( $_POST );       
             $this->data =  json_encode( array('message' => $data['count']) );
         }
     }

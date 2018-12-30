@@ -6,9 +6,8 @@ class Product extends Model
      * Status: 1=Pending; 2=Approved; 3=Deleted
      */
 
-
     public function getProducts(){
-        $sql = "SELECT * FROM t_products";
+        $sql = "SELECT * FROM t_products ORDER BY date ASC";
 
         return $this->db->query($sql);
     }
@@ -53,8 +52,12 @@ class Product extends Model
 
     public function getProductById($id){
         $id = $this->db->escape($id);
-        $sql = "SELECT *
+        $sql = "SELECT *,
+                    (b.description) as categories,
+                    c.company
                     FROM t_products a
+                    LEFT JOIN l_product_category b ON b.lid = a.category
+                    LEFT JOIN t_accounts c ON c.custid = a.custid
                     WHERE a.prodid ='{$id}' 
                     LIMIT 1";
 
@@ -234,10 +237,8 @@ class Product extends Model
     }
 
     public function saveStocks($data, $id = null){
-        $prodid = $data['id'];
-        $qty = $data['qty'];
-        //$remarks = $data['remarks'];
-
+        $prodid = $this->db->escape($data['id']);
+        $qty = $this->db->escape($data['qty']);
         if (!$id){
             $sql = "INSERT INTO `t_stocks` 
                 SET 
@@ -255,4 +256,27 @@ class Product extends Model
 
         return $this->db->query($sql);
     }
-}
+
+    public function saveVisits($prodid){
+        $prodid = $this->db->escape($prodid);
+        $ip = Util::getIpAddress();
+        $browser = Util::getBrowserName();
+
+        //check if valid product
+        if ( self::getProductById($prodid) ){
+            $sql = "INSERT INTO t_visits 
+                SET
+                prodid = '{$prodid}',
+                ip = '{$ip}',
+                browser = '{$browser}',
+                date = NOW()
+                ";
+            
+            return $this->db->query($sql);
+        }
+      
+        return false;
+    }
+
+    
+}                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 

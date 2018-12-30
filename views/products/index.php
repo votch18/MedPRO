@@ -1,10 +1,10 @@
 <!-- Title Page -->
-<section class="bg-title-page p-t-50 p-b-40 flex-col-c-m" style="background-image: url(images/heading-pages-02.jpg);">
+<section class="bg-title-page p-t-50 p-b-40 flex-col-c-m" style="background-image: url(images/heading-pages-02.jpg); background-color: #d0d0d0;">
 		<h2 class="l-text2 t-center">
-			Women
+			Products
 		</h2>
 		<p class="m-text13 t-center">
-			New Arrivals Women Collection 2018
+			New Arrivals 2018
 		</p>
 	</section>
 
@@ -21,35 +21,28 @@
 						</h4>
 
 						<ul class="p-b-54">
+
+						<?php
+							/**
+							 * Show product categories for search
+							 */
+
+							$category = new Category();
+							$categories = $category->getCategories();
+
+							$count = 0;
+							foreach($categories as $row) {
+								$count++;
+						?>
 							<li class="p-t-4">
-								<a href="#" class="s-text13 active1">
-									All
+								<a href="#" class="s-text13 <?=count == 1 ? active1 : ''?>">
+									<?=$row['description'] ?>
 								</a>
 							</li>
 
-							<li class="p-t-4">
-								<a href="#" class="s-text13">
-									Women
-								</a>
-							</li>
-
-							<li class="p-t-4">
-								<a href="#" class="s-text13">
-									Men
-								</a>
-							</li>
-
-							<li class="p-t-4">
-								<a href="#" class="s-text13">
-									Kids
-								</a>
-							</li>
-
-							<li class="p-t-4">
-								<a href="#" class="s-text13">
-									Accesories
-								</a>
-							</li>
+						<?php
+							 }
+						?>
 						</ul>
 
 						<!--  -->
@@ -207,9 +200,9 @@
 									<img src="/uploads/products/<?=$photo_1st?>" alt="IMG-PRODUCT">
 
 									<div class="block2-overlay trans-0-4">
-										<a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
+										<a id="<?=$product_1st['prodid'] ?>" href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
 											<i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>
-											<i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>
+											<i class="icon-wishlist icon_heart dis-none" style="color: red;"aria-hidden="true"></i>
 										</a>
 
 										<div class="block2-btn-addcart w-size1 trans-0-4">
@@ -222,7 +215,7 @@
 								</div>
 
 								<div class="block2-txt p-t-20">
-									<a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
+									<a href="/products/detail/<?=$product_1st['prodid'] ?>" class="block2-name dis-block s-text3 p-b-5">
 										<?=$product_1st['name']?>
 									</a>
 
@@ -246,7 +239,7 @@
 									<img src="/uploads/products/<?=$photo_2nd?>" alt="IMG-PRODUCT">
 
 									<div class="block2-overlay trans-0-4">
-										<a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
+										<a id="<?=$product_2nd['prodid'] ?>" href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
 											<i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>
 											<i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>
 										</a>
@@ -261,7 +254,7 @@
 								</div>
 
 								<div class="block2-txt p-t-20">
-									<a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
+									<a href="/products/detail/<?=$product_2nd['prodid'] ?>" class="block2-name dis-block s-text3 p-b-5">
 										<?=$product_2nd['name']?>
 									</a>
 
@@ -285,7 +278,7 @@
 									<img src="/uploads/products/<?=$photo_3rd?>" alt="IMG-PRODUCT">
 
 									<div class="block2-overlay trans-0-4">
-										<a href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
+										<a id="<?=$product_3rd['prodid'] ?>" href="#" class="block2-btn-addwishlist hov-pointer trans-0-4">
 											<i class="icon-wishlist icon_heart_alt" aria-hidden="true"></i>
 											<i class="icon-wishlist icon_heart dis-none" aria-hidden="true"></i>
 										</a>
@@ -300,7 +293,7 @@
 								</div>
 
 								<div class="block2-txt p-t-20">
-									<a href="product-detail.html" class="block2-name dis-block s-text3 p-b-5">
+									<a href="/products/detail/<?=$product_3rd['prodid'] ?>" class="block2-name dis-block s-text3 p-b-5">
 										<?=$product_3rd['name']?>
 									</a>
 
@@ -332,6 +325,10 @@
 	</section>
 
 	<script type="text/javascript">
+
+		/**
+		 * Add to cart button is click
+		 */
 		$('.block2-btn-addcart').each(function(){
 			var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();
 			$(this).on('click', function(){
@@ -340,21 +337,16 @@
 					prodid: $(this).children().attr('id'),
 				}
 
-				console.log(item);
-
 				addItemtoOrder(item);
 
+				//show sweetalert success message
 				swal(nameProduct, "is added to cart !", "success");
 			});
 		});
 
-		$('.block2-btn-addwishlist').each(function(){
-			var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();
-			$(this).on('click', function(){
-				swal(nameProduct, "is added to wishlist !", "success");
-			});
-		});
-
+		/**
+		 * Add product to cart
+		 */
 		function addItemtoOrder(item){
 			
 			return $.ajax({
@@ -369,6 +361,7 @@
 						case 'success': 
 							break
 						case 'error':
+							//show sweetalert error message
 							swal({
 								title: "Error",
 								text: "An error occured while saving your changes",
@@ -383,5 +376,53 @@
 			});
 		}
 
+
+		/**
+		 * Add to wishlist is click
+		 */
+		$('.block2-btn-addwishlist').each(function(){
+			var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();
+			$(this).on('click', function(){
+				var item = {
+					prodid: $(this).attr('id'),
+				}
+
+				addItemtoWishlist(item);
+				//show sweetalert success message
+				swal(nameProduct, "is added to wishlist !", "success");
+			});
+		});
+
+		/**
+		 * Add to wishlist 
+		 */
+		function addItemtoWishlist(item){
+			
+			return $.ajax({
+				type: 'POST',
+				url: '/ajax/wishlists/additem/',
+				data: item,
+				dataType: 'json',
+				crossDomain: true,
+				headers: {'X-Requested-With': 'XMLHttpRequest'},
+				success: function(response){
+					switch(response.message){
+						case 'success': 
+							break
+						case 'error':
+							//show sweetalert error message
+							swal({
+								title: "Error",
+								text: "An error occured while saving your changes",
+								type: "error",
+								confirmButtonText: '',
+								showCancelButton: true,
+								showConfirmButton: false,
+							});
+							break
+					}
+				}
+			});
+		}
 
 	</script>

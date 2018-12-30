@@ -44,7 +44,7 @@ class Order extends Model
         $prodid = $data['prodid'];
         $custid = Session::get('userid');
         $seller = Product::getSellerIdByProduct($data['prodid']);       
-        
+        $qty = isset($data['qty']) ? $data['qty'] : '1';
         /*
         $street1 = $data['street1'];
         $street2 = $data['street2'];
@@ -59,7 +59,7 @@ class Order extends Model
             $sql = "INSERT INTO `t_orders` 
                 SET 
                 `prodid`= '{$prodid}',
-                `qty`= 1,
+                `qty`= '{$qty}',
                 `date`= NOW(),
                 `custid`= '{$custid}',
                 `seller`= '{$seller}'
