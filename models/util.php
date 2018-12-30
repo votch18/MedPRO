@@ -85,7 +85,10 @@ class Util extends Model {
      */
     public static function getBrowserName()
     {
-        $user_agent = $_SERVER['HTTP_USER_AGENT'];
+        $user_agent = strtolower($_SERVER['HTTP_USER_AGENT']);
+        
+        //add space to so that strpos won't return 0
+        $user_agent = " ".$user_agent;
 
         if (strpos($user_agent, 'Opera') || strpos($user_agent, 'OPR/')) return 'Opera';
         elseif (strpos($user_agent, 'Edge')) return 'Microsoft Edge';

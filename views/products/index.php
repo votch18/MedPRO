@@ -4,7 +4,7 @@
 			Products
 		</h2>
 		<p class="m-text13 t-center">
-			New Arrivals 2018
+			<?=isset($this->data['query']) ? $this->data['query'] : ''?>
 		</p>
 	</section>
 
@@ -35,7 +35,7 @@
 								$count++;
 						?>
 							<li class="p-t-4">
-								<a href="#" class="s-text13 <?=count == 1 ? active1 : ''?>">
+								<a href="/products/?category=<?=$row['description']?>" class="s-text13 <?=count == 1 ? active1 : ''?>">
 									<?=$row['description'] ?>
 								</a>
 							</li>
@@ -68,52 +68,9 @@
 								</div>
 
 								<div class="s-text3 p-t-10 p-b-10">
-									Range: $<span id="value-lower">610</span> - $<span id="value-upper">980</span>
+									Range: <span id="value-lower">610</span> - <span id="value-upper">980</span>
 								</div>
 							</div>
-						</div>
-
-						<div class="filter-color p-t-22 p-b-50 bo3">
-							<div class="m-text15 p-b-12">
-								Color
-							</div>
-
-							<ul class="flex-w">
-								<li class="m-r-10">
-									<input class="checkbox-color-filter" id="color-filter1" type="checkbox" name="color-filter1">
-									<label class="color-filter color-filter1" for="color-filter1"></label>
-								</li>
-
-								<li class="m-r-10">
-									<input class="checkbox-color-filter" id="color-filter2" type="checkbox" name="color-filter2">
-									<label class="color-filter color-filter2" for="color-filter2"></label>
-								</li>
-
-								<li class="m-r-10">
-									<input class="checkbox-color-filter" id="color-filter3" type="checkbox" name="color-filter3">
-									<label class="color-filter color-filter3" for="color-filter3"></label>
-								</li>
-
-								<li class="m-r-10">
-									<input class="checkbox-color-filter" id="color-filter4" type="checkbox" name="color-filter4">
-									<label class="color-filter color-filter4" for="color-filter4"></label>
-								</li>
-
-								<li class="m-r-10">
-									<input class="checkbox-color-filter" id="color-filter5" type="checkbox" name="color-filter5">
-									<label class="color-filter color-filter5" for="color-filter5"></label>
-								</li>
-
-								<li class="m-r-10">
-									<input class="checkbox-color-filter" id="color-filter6" type="checkbox" name="color-filter6">
-									<label class="color-filter color-filter6" for="color-filter6"></label>
-								</li>
-
-								<li class="m-r-10">
-									<input class="checkbox-color-filter" id="color-filter7" type="checkbox" name="color-filter7">
-									<label class="color-filter color-filter7" for="color-filter7"></label>
-								</li>
-							</ul>
 						</div>
 
 						<div class="search-product pos-relative bo4 of-hidden">
@@ -142,11 +99,11 @@
 							<div class="rs2-select2 bo4 of-hidden w-size12 m-t-5 m-b-5 m-r-10">
 								<select class="selection-2" name="sorting">
 									<option>Price</option>
-									<option>$0.00 - $50.00</option>
-									<option>$50.00 - $100.00</option>
-									<option>$100.00 - $150.00</option>
-									<option>$150.00 - $200.00</option>
-									<option>$200.00+</option>
+									<option>0.00 - 50.00</option>
+									<option>50.00 - 100.00</option>
+									<option>100.00 - 150.00</option>
+									<option>150.00 - 200.00</option>
+									<option>200.00+</option>
 
 								</select>
 							</div>
@@ -159,40 +116,50 @@
 
                     <?php 
                     
-                    if(count ($this->data) > 0 ) { 
+                    if(count ($this->data['data']) > 0 ) { 
 						
 						$valid_products = [];
-						//validate products
-						foreach($this->data as $row) {
+
+						//validate products and images
+						foreach($this->data['data'] as $row) {
 							$main_photo = explode(",", $row['images']);
-							
+							//if valid add to array
                             if( file_exists(realpath('uploads/products/'.$main_photo[0])) && !is_dir(realpath('uploads/products/'.$main_photo[0])) ) {
 								$valid_products[] = $row;
 							}
 						}
 
-
+						//get number of rows by set of 3
 						$rows =  ceil(count ($valid_products) / 3);
-
 						
+					
 						for ( $x = 0; $x <= $rows; $x++){
+
+							//get products within the set
 							$product_1st = isset($valid_products[($x * 3)]) ? $valid_products[($x * 3)] : null;
 							$product_2nd = isset($valid_products[($x * 3) + 1]) ? $valid_products[($x * 3) + 1] : null;
 							$product_3rd = isset($valid_products[($x * 3) + 2]) ? $valid_products[($x * 3) + 2] : null;
 
+							//explode images of products
 							$photo_1st = isset($product_1st) ? explode(",", $product_1st['images']) : null;
 							$photo_2nd = isset($product_2nd) ? explode(",", $product_2nd['images']) : null;
 							$photo_3rd = isset($product_3rd) ? explode(",", $product_3rd['images']) : null;
 
+							//get main photo of each product within the set
 							$photo_1st = isset($photo_1st[0]) ? $photo_1st[0] : null;
 							$photo_2nd = isset($photo_2nd[0]) ? $photo_2nd[0] : null;
 							$photo_3rd = isset($photo_3rd[0]) ? $photo_3rd[0] : null;
                            
                         ?>
 					
-					<?php if ( file_exists(realpath('uploads/products/'.$photo_1st)) && !is_dir(realpath('uploads/products/'.$photo_1st)) ) {?>
-					<!-- Product -->
 					<div class="row">
+					
+					<?php 
+					//display product 1 of $x set
+					if ( file_exists(realpath('uploads/products/'.$photo_1st)) && !is_dir(realpath('uploads/products/'.$photo_1st)) ) {
+						?>
+					<!-- Product -->
+							
 						<div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
 							<!-- Block2 -->
 							<div class="block2">
@@ -227,12 +194,12 @@
 						</div>
 
 						<?php }
-						
+							//display product 2 of $x set
 							if ( file_exists(realpath('uploads/products/'.$photo_2nd)) && !is_dir(realpath('uploads/products/'.$photo_2nd)) ){
 						
 						?>
                  
-						<div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
+				 		<div class="col-sm-12 col-md-6 col-lg-4 p-b-50">
 							<!-- Block2 -->
 							<div class="block2">
 								<div class="block2-img wrap-pic-w of-hidden pos-relative">
@@ -264,9 +231,8 @@
 								</div>
 							</div>
 						</div>
-
 						<?php }
-						
+							//display product 3 of $x set
 							if ( file_exists(realpath('uploads/products/'.$photo_3rd)) && !is_dir(realpath('uploads/products/'.$photo_3rd)) ){
 						
 						?>
@@ -300,19 +266,18 @@
 									<span class="block2-price m-text6 p-r-5">
 										<?=$product_3rd['price']?>
 									</span>
-								</div>
+								</div>												
 							</div>
 						</div>
-
-
 						<?php 
-							}
-                        } 
-                    
+							}  ?>	
+							</div>
+						
+						
+                    <?php } 
                     } else {  ?>
                         <p class="alert alert-warning">No records found!</p>
                     <?php }  ?>
-					</div>
 
 					<!-- Pagination -->
 					<div class="pagination flex-m flex-w p-t-26">

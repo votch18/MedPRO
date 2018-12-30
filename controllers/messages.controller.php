@@ -7,10 +7,14 @@ class MessagesController extends Controller{
         $this->model = new Message();
     }
 
-    public function index(){
-        $this->data = $this->model->getOrders();
+    /** Admin Pages */
+    public function admin_index(){
+        $this->data = $this->model->getAdminThread();
     }
 
+    /** End Admin Pages */
+
+    /** Ajax Request */
     public function ajax_removeitem(){        
         if( isset($_POST) ){              
             $this->data =  $this->model->delete( $_POST['id'] );
@@ -30,4 +34,5 @@ class MessagesController extends Controller{
             $this->data =  json_encode( array('message' => $data['count']) );
         }
     }
+    /** End Ajax Request */
 }

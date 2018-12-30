@@ -8,7 +8,12 @@ class ProductsController extends Controller{
     }
 
     public function index(){
-        $this->data = $this->model->getApprovedProducts();
+        if( $this->getQuery() != null ){
+            $this->data['query'] = $this->getQuery();
+            $this->data['data'] = $this->model->getProductsByCategory( $this->getQuery() );
+        }else{
+            $this->data['data'] = $this->model->getApprovedProducts();
+        }       
     }
 
   
@@ -30,6 +35,7 @@ class ProductsController extends Controller{
 
     /** End Admin Pages */
 
+    /**My account pages */
     public function myaccount_index(){
         $this->data = $this->model->getProductsByCustomer();
     }
@@ -45,9 +51,7 @@ class ProductsController extends Controller{
     }
 
     public function myaccount_edit(){
-
         $this->data = $this->model->getProductById($this->params[0]);
-
         if ( $_POST ){           
             if($this->model->save($_POST, $_POST['id'])) {                
                 Router::redirect('/me/products/');
@@ -56,33 +60,28 @@ class ProductsController extends Controller{
             }
         }
     }
+    /**End my account pages */
 
-    public function ajax_delete(){
-        
-        if(isset($_POST)){
-              
+    /**My account & guest ajax */
+    public function ajax_delete(){        
+        if(isset($_POST)){              
             $this->data =  $this->model->delete( $_POST['id'] );
         }
     }
 
-    public function ajax_add_photo(){
-        
-        if(isset($_POST)){
-              
+    public function ajax_add_photo(){        
+        if(isset($_POST)){              
             $this->data =  $this->model->addPhoto( $_POST['id'] );
         }
     }
 
-    public function ajax_delete_photo(){
-        
-        if(isset($_POST)){
-              
+    public function ajax_delete_photo(){        
+        if(isset($_POST)){              
             $this->data =  $this->model->deletePhoto( $_POST['image'],  $_POST['id']);
         }
     }
 
-    public function ajax_save_main_photo(){
-        
+    public function ajax_save_main_photo(){        
         if(isset($_POST)){              
             $this->data =  $this->model->saveMainPhoto( $_POST['image'],  $_POST['id'] );
         }
@@ -94,4 +93,14 @@ class ProductsController extends Controller{
             $this->data =  json_encode( array('qty' => $_POST['qty']) );
         }
     }
+    /**End my account & guest ajax */
+
+    /**Admin ajax */
+    public function ajax_approve_product(){
+        if(isset($_POST)){       
+            $this->model->approveProduct( $_POST['prodid'] );    
+            $this->data =  json_encode( array('message' => 'success') );
+        }
+    }
+    /**End admin ajax */
 }
