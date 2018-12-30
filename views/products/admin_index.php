@@ -138,9 +138,6 @@
                     $msg = JSON.parse($data);
                     console.log($msg.message);
 
-                    $(this).parent().siblings('.status').find('.badge.badge-warning').remove();
-                    //$(this).parent().parent().remove();
-
                     swal(
                     'Approved!',
                     'Your product has been approved.',
@@ -148,6 +145,9 @@
                     )
                    
                 });
+                $(this).parent().parent().find('.status').find('.badge.badge-warning').remove();
+                $(this).parent().parent().find('.status').append('<span class="badge badge-success p-2">Approved</span>');
+                $(this).remove();
             }
             
         });
