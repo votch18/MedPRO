@@ -32,6 +32,7 @@ class LoginController extends Controller{
                 Session::set('userid', $user['userid']);
                 Session::set('username', $user['username']);
                 Session::set('access', $user['access']);
+                Session::set('avatar', $user['photo']);
                 
                 $log = new Log();
                 $log->save('Log-in');

@@ -31,4 +31,17 @@ class MessagesController extends Controller{
         }
     }
     /** End Ajax Request */
+
+    /** Ajax request admin */
+    public function ajax_get_admin_notifications(){
+        $note = new Notification();       
+        $this->data =  json_encode( $note->get_admin_notifications() );
+    }
+
+     
+    public function ajax_read_admin_notifications(){
+        $note = new Notification();       
+        $this->data =  json_encode( $note->mark_as_read_admin() );
+    }
+    /** End ajax admin */
 }

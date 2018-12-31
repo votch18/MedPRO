@@ -15,6 +15,19 @@ class Notification extends Model
         return $this->db->query($sql);
     }
 
+
+    /**
+     * @param string $id
+     * @return array
+     */
+    public function get_admin_notifications(){
+
+        $sql = "SELECT *
+             from t_notifications WHERE to_admin = 1 ORDER BY date DESC LIMIT 5";
+
+        return $this->db->query($sql);
+    }
+
     /**
      * @param array $data
      * @return bool
@@ -41,6 +54,17 @@ class Notification extends Model
         $id = $this->db->escape($id);
 
         $sql = "UPDATE t_notifications SET is_read = 1 WHERE custid = '{$id}'";
+
+        return $this->db->query($sql);
+    }
+
+    /**
+     * @param string $id
+     * @return bool
+     */
+    public function mark_as_read_admin(){
+       
+        $sql = "UPDATE t_notifications SET is_read = 1 WHERE to_admin = 1";
 
         return $this->db->query($sql);
     }

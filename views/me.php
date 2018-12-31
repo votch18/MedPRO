@@ -252,7 +252,7 @@
                                         </li>
                                         <li>
                                             <a href="#">
-                                                <i class="fas fa-shopping-basket"></i>Products</a>
+                                                <i class="fas fa-medkit"></i>Products</a>
                                         </li>
                                         <li class="has-sub">
                                             <a class="js-arrow" href="#">
@@ -394,15 +394,13 @@
                 var $count = 0;
                 var noti_content = '';
                 
-
-                console.log($data);
                 $.each( $data, function(index, value){
                     $count += (value.is_read == '0') ? 1 : 0;
 
                     var $date = new Date(Date.parse(value.date));
                     var today = new Date();                   
                     var time_diff = Math.abs($date.getTime() - today.getTime());
-                    
+
                     //play sound 
                     if(value.is_read == '0' && (time_diff < 1000 && time_diff > -1000)){
                         $('audio#pop')[0].play();

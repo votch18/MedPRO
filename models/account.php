@@ -48,7 +48,8 @@ class Account extends Model
             Session::set('userid', $account['custid']);
             Session::set('username', $account['username']);
             Session::set('access', 2);
-            Session::set('type', $account['type']);
+            Session::set('type', $account['type']);            
+            Session::set('avatar', $account['photo']);
             
             $log = new Log();
             $log->save('Log-in');
