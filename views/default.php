@@ -113,7 +113,7 @@ $access = Session::get('access');
 				<!-- Header Icon -->
 				<div class="header-icons">
 					<div class="header-wrapicon1 dis-block">
-						<?php if ( !$access ) { ?>
+						<?php if ( !isset($access) ) { ?>
 							<a href="/login/">Sign-in</a>
 						<?php }else { ?>
 							<img src="/assets/default/images/icons/icon-header-01.png" class="header-icon1 js-show-header-dropdown" alt="ICON">
@@ -126,7 +126,7 @@ $access = Session::get('access');
 											</a>
 										</div>
 										<div class="header-cart-item-txt">
-											<a href="/admin/users/logout" class="header-cart-item-name">
+											<a href="/users/logout" class="header-cart-item-name">
 												Sign-out
 											</a>
 										</div>
@@ -139,7 +139,7 @@ $access = Session::get('access');
 					<span class="linedivide1"></span>
 
 					<div class="header-wrapicon2">
-						<?php if ( !$access ) { ?>
+						<?php if ( !isset($access) ) { ?>
 							<a href="/signup/">Sign-up</a>
 						<?php }else { ?>
 							<img src="/assets/default/images/icons/icon-header-02.png" class="header-icon1 js-show-header-dropdown" alt="ICON">

@@ -2,13 +2,31 @@
 
 class Member extends Model{
 
-
+    /**
+     * get all Members
+     * @return array
+     */
     public function getMembers(){
 
         $sql = "SELECT a.*,
                     (SELECT x.description FROM l_gender x WHERE x.lid=a.gender) as gender
                     FROM t_members a 
                     WHERE a.is_active = 1 
+                    order by a.lname, a.fname, a.mname";
+
+        return $this->db->query($sql);
+    }
+
+    /**
+     * get members by type {supplier: 1, buyer: 2}
+     * @return array
+     */
+    public function getMembersByType($type = 1){
+
+        $sql = "SELECT a.*,
+                    (SELECT x.description FROM l_gender x WHERE x.lid=a.gender) as gender
+                    FROM t_members a 
+                    WHERE a.is_active = 1 AND a.type = '{$type}'
                     order by a.lname, a.fname, a.mname";
 
         return $this->db->query($sql);

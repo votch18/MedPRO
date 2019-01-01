@@ -12,6 +12,20 @@ class App{
         return self::$router;
     }
 
+    /**
+     * set session using cookie
+     * @return void
+     */
+    public static function setSession(){
+       if (isset($_COOKIE['userid'])) Session::set('userid', $_COOKIE['userid']);
+       if (isset($_COOKIE['username'])) Session::set('username', $_COOKIE['username']);
+       if (isset($_COOKIE['email'])) Session::set('email', $_COOKIE['email']);
+       if (isset($_COOKIE['access'])) Session::set('access', $_COOKIE['access']);
+       if (isset($_COOKIE['avatar'])) Session::set('avatar', $_COOKIE['photo']);
+       if (isset($_COOKIE['fname'])) Session::set('fname', $_COOKIE['fname']);
+       if (isset($_COOKIE['lname'])) Session::set('lname', $_COOKIE['lname']);
+    }
+
     public static function run($uri){
         self::$router = new Router($uri);
         self::$db = new DB(Config::get('db_host'),Config::get('db_username'),Config::get('db_password'),Config::get('db_name'));
@@ -19,14 +33,26 @@ class App{
         $controller_class = ucfirst(self::$router->getController()).'Controller';
         $controller_method = strtolower(self::$router->getMethodPrefix().self::$router->getAction());
 
+        //get layout
         $layout = self::$router->getRoute();
-        $access = Session::get('access');
-     
+
+        //get access
+        $current_session_access =  Session::get('access');
+        $access = !isset($current_session_access) ? (!isset($_COOKIE['access']) ? null : $_COOKIE['access']) : $current_session_access;
+        
+        //if cookie is found set session using cookie
+        if (isset($_COOKIE['access']) && !isset($current_session_access)){
+            self::setSession();
+        }
+
+        //if not sign-in and layout is admin go to admin login page
         if ($layout == 'admin'){
             if ( !isset($access) && self::$router->getController() != 'login'){
                 Router::redirect('/admin/login/');
             }         
         }
+
+        //TODO: handle seller and buyer account access
 
         $controller_object = new $controller_class();
         if (method_exists($controller_object, $controller_method)) {
@@ -54,7 +80,7 @@ class App{
 
         }else{
 
-             //header("HTTP/1.0 404 Not Found");
+            //header("HTTP/1.0 404 Not Found");
             //Router::redirect("/page_not_found/");
             throw new Exception ("Method: ".$controller_method." of class " .$controller_class." does not exist!");
         }

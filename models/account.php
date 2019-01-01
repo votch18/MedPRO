@@ -3,12 +3,20 @@
 class Account extends Model
 {
 
+    /**
+     * @return array
+     */
     public function getAccounts(){
         $sql = "SELECT * FROM t_accounts";
 
         return $this->db->query($sql);
     }
 
+    /**
+     * register company
+     * @param mixed $data
+     * @return bool
+     */
     public function register($data){
 
         $company = $this->db->escape($data['company']);
@@ -37,27 +45,6 @@ class Account extends Model
             ";
 
         return $this->db->query($sql);
-    }
-
-    public function loginAccount($username, $password){
-
-        $account = self::getByUserName($username);
-        $hash = md5($account['salt'].$password);
-
-        if ($account && $hash == $account['password']){
-            Session::set('userid', $account['custid']);
-            Session::set('username', $account['username']);
-            Session::set('access', 2);
-            Session::set('type', $account['type']);            
-            Session::set('avatar', $account['photo']);
-            
-            $log = new Log();
-            $log->save('Log-in');
-
-            return true;
-        }
-
-        return false;
     }
 
     public function getByUserName($username){

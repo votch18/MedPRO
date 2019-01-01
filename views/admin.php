@@ -111,20 +111,20 @@
                                     <img src="/uploads/users/<?=Session::get('avatar')?>" alt="John Doe" />
                                 </div>
                                 <div class="content">
-                                    <a class="js-acc-btn" href="#">john doe</a>
+                                    <a class="js-acc-btn" href="#"><?=Session::get('fname').' '.Session::get('lname')?></a>
                                 </div>
                                 <div class="account-dropdown js-dropdown">
                                     <div class="info clearfix">
                                         <div class="image">
                                             <a href="#">
-                                                <img src="images/icon/avatar-01.jpg" alt="John Doe" />
+                                                <img src="/uploads/users/<?=Session::get('avatar')?>" alt="John Doe" />
                                             </a>
                                         </div>
                                         <div class="content">
                                             <h5 class="name">
-                                                <a href="#">john doe</a>
+                                                <a href="#"><?=Session::get('fname').' '.Session::get('lname')?></a>
                                             </h5>
-                                            <span class="email">johndoe@example.com</span>
+                                            <span class="email"><?=Session::get('email')?></span>
                                         </div>
                                     </div>
                                     <div class="account-dropdown__body">
@@ -163,13 +163,13 @@
                             <div class="au-breadcrumb-left">
                                 <span class="au-breadcrumb-span">You are here:</span>
                                 <ul class="list-unstyled list-inline au-breadcrumb__list">
-                                    <li class="list-inline-item active">
-                                        <a href="#">Home</a>
-                                    </li>
+                                    <li class="list-inline-item"><?=ucwords(App::getRouter()->getController())?></li>
+                                    <?php if( App::getRouter()->getAction() != 'index') { ?>
                                     <li class="list-inline-item seprate">
                                         <span>/</span>
-                                    </li>
-                                    <li class="list-inline-item">Dashboard</li>
+                                    </li>                                   
+                                    <li class="list-inline-item"><?=ucwords(App::getRouter()->getAction())?></li>
+                                    <?php } ?>
                                 </ul>
                             </div>
                         </div>
@@ -180,8 +180,7 @@
                         <div class="welcome2-inner m-t-60">
                             <div class="welcome2-greeting">
                                 <h1 class="title-6">Hi
-                                    <span>John</span>, Welcome back</h1>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit</p>
+                                    <span><?=Session::get('fname')?></span>, Welcome back</h1>
                             </div>
                             <form class="form-header form-header2" action="" method="post">
                                 <input class="au-input au-input--w435" type="text" name="search" placeholder="Search for datas &amp; reports...">
@@ -200,7 +199,7 @@
 
           <!-- PAGE CONTENT-->
           <div class="page-container3">
-            <section class="alert-wrap p-t-70 p-b-70">
+            <section class="alert-wrap p-t-50 p-b-70">
                 <div class="container">
                     <!-- ALERT-->
                     <?php if ( Session::hasFlash() != null ) { ?>
@@ -220,28 +219,37 @@
             <section>
                 <div class="container">
                     <div class="row">
-                        <div class="col-xl-3">
+                        <div class="col-xl-3" >
                             <!-- MENU SIDEBAR-->
                             <aside class="menu-sidebar3 js-spe-sidebar">
                                 <nav class="navbar-sidebar2 navbar-sidebar3">
-                                    <ul class="list-unstyled navbar__list">
+                                    <ul class="list-unstyled navbar__list" style="border-top: 5px solid #4272d7;">
                                         <li class="<?=App::getRouter()->getController() == 'home' ? 'active' : '' ?>">
                                             <a class="js-arrow" href="/admin/">
-                                                <i class="fas fa-tachometer-alt"></i>Dashboard
-                                               
+                                                <i class="fas fa-tachometer-alt"></i>Dashboard                                               
                                             </a>
-                                        </li>
-                                        <li class="<?=App::getRouter()->getController() == 'suppliers' ? 'active' : '' ?>">
-                                            <a href="/admin/suppliers/">
-                                                <i class="fa fa-truck"></i>Suppliers</a>
-                                        </li>
-                                        <li class="<?=App::getRouter()->getController() == 'buyers' ? 'active' : '' ?>">
-                                            <a href="/admin/buyers/">
-                                                <i class="fas fa-shopping-basket"></i>Buyers</a>
                                         </li>
                                         <li class="<?=App::getRouter()->getController() == 'messages' ? 'active' : '' ?>">
                                             <a href="/admin/messages/">
                                                 <i class="fas fa-chart-bar"></i>Inbox</a>
+                                        </li>
+                                        <li class="has-sub <?=App::getRouter()->getController() == 'members' ? 'active' : '' ?>">
+                                            <a class="js-arrow" href="#">
+                                                <i class="fas fa-shopping-basket"></i>Members
+                                                <span class="arrow">
+                                                    <i class="fas fa-angle-down"></i>
+                                                </span>
+                                            </a>
+                                            <ul class="list-unstyled navbar__sub-list js-sub-list">
+                                                <li>
+                                                    <a href="/admin/members/suppliers/">
+                                                        <i class="fa fa-truck"></i>Suppliers</a>
+                                                </li>
+                                                <li>
+                                                    <a href="/admin/members/buyers/">
+                                                        <i class="fas fa-shopping-basket"></i>Buyers</a>
+                                                </li>
+                                            </ul>
                                         </li>
                                         <li class="<?=App::getRouter()->getController() == 'products' ? 'active' : '' ?>" >
                                             <a href="/admin/products/">
@@ -253,27 +261,7 @@
                                                 <i class="fas fa-trophy"></i>Ratings
                                               
                                             </a>                                          
-                                        </li>
-                                        <li class="<?=App::getRouter()->getController() == 'accounts' ? 'active' : '' ?> has-sub">
-                                            <a class="js-arrow" href="#">
-                                                <i class="fas fa-copy"></i>Account
-                                                <span class="arrow">
-                                                    <i class="fas fa-angle-down"></i>
-                                                </span>
-                                            </a>
-                                            <ul class="list-unstyled navbar__sub-list js-sub-list">
-                                                <li>
-                                                    <a href="login.html">Login</a>
-                                                </li>
-                                                <li>
-                                                    <a href="register.html">Register</a>
-                                                </li>
-                                                <li>
-                                                    <a href="forget-pass.html">Forget Password</a>
-                                                </li>
-                                            </ul>
-                                        </li>
-                                      
+                                        </li>                                       
                                     </ul>
                                 </nav>
                             </aside>
@@ -284,16 +272,13 @@
                             <div class="page-content">
                                 <div class="row">
                                     
-                                    
                                         <?php echo $content['content_html']; ?>
 
-
-                                   
                                 </div>
                                 <div class="row">
-                                    <div class="col-md-12">
+                                    <div class="col-md-12  p-t-50">
                                         <div class="copyright">
-                                            <p>Copyright © 2018 Colorlib. All rights reserved. Template by <a href="https://colorlib.com">Colorlib</a>.</p>
+                                            <p>Copyright © 2018 MedPro. All rights reserved. </a>.</p>
                                         </div>
                                     </div>
                                 </div>

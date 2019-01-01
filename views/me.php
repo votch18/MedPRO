@@ -222,7 +222,7 @@
                             <!-- MENU SIDEBAR-->
                             <aside class="menu-sidebar3 js-spe-sidebar">
                                 <nav class="navbar-sidebar2 navbar-sidebar3">
-                                    <ul class="list-unstyled navbar__list">
+                                    <ul class="list-unstyled navbar__list" style="border-top: 5px solid #4272d7;">
                                         <li class="active has-sub">
                                             <a class="js-arrow" href="#">
                                                 <i class="fas fa-tachometer-alt"></i>Dashboard

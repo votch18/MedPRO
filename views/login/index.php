@@ -30,11 +30,24 @@
 							<input class="sizefull s-text7 p-l-22 p-r-22" type="password" name="password" placeholder="Password" required>
 						</div>
 
-						<div class="w-size25">
+						<div class="size15 m-b-10">
+							<label>
+								<input type="checkbox" name="remember">&nbsp;Remember Me
+							</label>		
+							<label style="float: right;">
+								<a href="#">Forgotten Password?</a>
+							</label>					
+						</div>
+
+						<div class="w-size25 m-b-20">
 							<!-- Button -->
 							<button class="flex-c-m size2 bg1 bo-rad-23 hov1 m-text3 trans-0-4">
 								Sign-in
 							</button>
+						</div>
+
+						<div class="size15 m-b-20">
+							
 						</div>
 					</form>
 				</div>

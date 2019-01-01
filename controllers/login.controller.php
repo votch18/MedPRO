@@ -4,13 +4,12 @@ class LoginController extends Controller{
 
     public function __construct($data = array()){
         parent::__construct($data);
-        $this->model = new User();
+        $this->model = new Auth();
     }
 
     public function index(){
         if ($_POST){
-            $account = new Account();
-            if ($account->loginAccount($_POST['username'], $_POST['password'])){
+            if ($this->model->loginAccount($_POST['username'], $_POST['password'], $_POST['remember']) ){
                 Router::redirect('/');
             }else{
                 Session::setFlash("Invalid username or password!");
@@ -25,20 +24,9 @@ class LoginController extends Controller{
         }
 
         if ($_POST && isset ( $_POST['username']) && isset ($_POST['password'])){
-            $user = $this->model->getByUserName($_POST['username']);
-            $hash = md5($user['salt'].$_POST['password']);
-
-            if ($user && $user['is_active'] && $hash == $user['password']){
-                Session::set('userid', $user['userid']);
-                Session::set('username', $user['username']);
-                Session::set('access', $user['access']);
-                Session::set('avatar', $user['photo']);
-                
-                $log = new Log();
-                $log->save('Log-in');
-
+            if ( $this->model->loginAdmin($_POST['username'], $_POST['password'], $_POST['remember']) ){
                 Router::redirect('/admin/');
-            }else {
+            } else {
                 Session::setFlash("Invalid username or password!");
             }
         }

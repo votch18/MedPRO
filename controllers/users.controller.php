@@ -34,19 +34,6 @@ class UsersController extends Controller{
         }
     }
 
-    public function admin_logout(){
-        $log = new Log();
-        $log->save('Log-out' );
-
-        Session::destroy();
-        Router::redirect('/');
-    }
-
-    public function u_logout(){
-        Session::destroy();
-        Router::redirect('/');
-    }
-
     public function admin_index(){
         $this->data = $this->model->getUsers();
     }
@@ -114,5 +101,20 @@ class UsersController extends Controller{
                 Session::setFlash("<strong>Oh Snap!</strong> There was an error saving this record!");
             }
         }
+    }
+
+   
+    public function logout(){
+        $auth = new Auth();
+        $auth->logout();
+        
+        Router::redirect('/');
+    }
+
+    public function admin_logout(){
+        $auth = new Auth();
+        $auth->logout();
+        
+        Router::redirect('/admin/');
     }
 }
