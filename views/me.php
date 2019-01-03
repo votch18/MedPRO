@@ -1,10 +1,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-    <title><?=ucwords(strtolower(Setting::get("site_name"))) ?></title>
-
-  
     <!-- Required meta tags-->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -13,7 +9,7 @@
     <meta name="keywords" content="au theme template">
 
     <!-- Title Page-->
-    <title>Dashboard 4</title>
+    <title><?=ucwords(strtolower(Setting::get("site_name"))) ?></title>
 
     <!-- Fontfaces CSS-->
     <link href="/assets/admin/css/font-face.css" rel="stylesheet" media="all">
@@ -36,7 +32,7 @@
     <!-- Main CSS-->
     <link href="/assets/admin/css/theme.css" rel="stylesheet" media="all">
     
-    <link rel="/assets/js/sweetalert2/sweetalert2.css" rel="stylesheet">
+    <link href="/assets/js/sweetalert2/sweetalert2.css" rel="stylesheet">
     <script src="/assets/js/sweetalert2/sweetalert2.all.min.js"></script>
 
     <!-- Jquery JS-->
@@ -254,7 +250,7 @@
                                             <a href="#">
                                                 <i class="fas fa-medkit"></i>Products</a>
                                         </li>
-                                        <li class="has-sub">
+                                        <li class="has-sub <?=App::getRouter()->getController() == 'products' ? 'active' : '' ?>" >
                                             <a class="js-arrow" href="#">
                                                 <i class="fas fa-trophy"></i>Ratings
                                                 <span class="arrow">
@@ -341,20 +337,16 @@
     <script src="/assets/admin/vendor/bootstrap-4.1/popper.min.js"></script>
     <script src="/assets/admin/vendor/bootstrap-4.1/bootstrap.min.js"></script>
     <!-- Vendor JS       -->
-    <script src="/assets/admin/vendor/slick/slick.min.js">
-    </script>
+    <script src="/assets/admin/vendor/slick/slick.min.js"></script>
     <script src="/assets/admin/vendor/wow/wow.min.js"></script>
     <script src="/assets/admin/vendor/animsition/animsition.min.js"></script>
-    <script src="/assets/admin/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js">
-    </script>
+    <script src="/assets/admin/vendor/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
     <script src="/assets/admin/vendor/counter-up/jquery.waypoints.min.js"></script>
-    <script src="/assets/admin/vendor/counter-up/jquery.counterup.min.js">
-    </script>
+    <script src="/assets/admin/vendor/counter-up/jquery.counterup.min.js"></script>
     <script src="/assets/admin/vendor/circle-progress/circle-progress.min.js"></script>
     <script src="/assets/admin/vendor/perfect-scrollbar/perfect-scrollbar.js"></script>
     <script src="/assets/admin/vendor/chartjs/Chart.bundle.min.js"></script>
-    <script src="/assets/admin/vendor/select2/select2.min.js">
-    </script>
+    <script src="/assets/admin/vendor/select2/select2.min.js"></script>
 
     <!-- Main JS-->
     <script src="/assets/admin/js/main.js"></script>

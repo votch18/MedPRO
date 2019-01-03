@@ -19,6 +19,15 @@ class MembersController extends Controller{
 
     }
 
+
+    public function admin_suppliers(){
+        $this->data = $this->model->getMembersByType(1);
+    }
+
+    public function admin_buyers(){
+        $this->data = $this->model->getMembersByType(2);
+    }
+
     public function admin_deleted(){
        
         $this->data['data'] = $this->model->getDeletedMembers();
@@ -83,14 +92,13 @@ class MembersController extends Controller{
 
 public function admin_activate(){
     if ( isset($this->params[0])){
-         $result = $this->model->activate($this->params[0]);
+        $result = $this->model->activate($this->params[0]);
 
-         if ( $result ){
-            Router::redirect('/admin/members/deleted/');
-         }else{
-            Session::setFlash("<strong>Oh Snap!</strong> This was an error deleting this record!");
-         }
-
+        if ( $result ){
+        Router::redirect('/admin/members/deleted/');
+        }else{
+        Session::setFlash("<strong>Oh Snap!</strong> This was an error deleting this record!");
+        }
     }
 }
 
