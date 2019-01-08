@@ -14,6 +14,10 @@ class HomeController extends Controller{
 
     }
 
+    public function contact(){
+
+    }
+
     public function admin_index(){
         $user = new User();
         $this->data = $user->getByUserId(Session::get('userid'));;

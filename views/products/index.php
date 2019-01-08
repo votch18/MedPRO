@@ -187,7 +187,7 @@
 									</a>
 
 									<span class="block2-price m-text6 p-r-5">
-										<?=$product_1st['price']?>
+										<?=Util::number_format($product_1st['price'])?>
 									</span>
 								</div>
 							</div>
@@ -226,7 +226,7 @@
 									</a>
 
 									<span class="block2-price m-text6 p-r-5">
-										<?=$product_2nd['price']?>
+										<?=Util::number_format($product_2nd['price'])?>
 									</span>
 								</div>
 							</div>
@@ -264,7 +264,7 @@
 									</a>
 
 									<span class="block2-price m-text6 p-r-5">
-										<?=$product_3rd['price']?>
+										<?=Util::number_format($product_3rd['price'])?>
 									</span>
 								</div>												
 							</div>
@@ -294,18 +294,45 @@
 		/**
 		 * Add to cart button is click
 		 */
-		$('.block2-btn-addcart').each(function(){
+		$('.block2-btn-addcart').each(function(){	
 			var nameProduct = $(this).parent().parent().parent().find('.block2-name').html();
 			$(this).on('click', function(){
+				//check if login
+				var $userid = "<?=Session::get('userid')?>";
+				if( $userid != ""){
+					var item = {
+						prodid: $(this).children().attr('id'),
+					}
 
-				var item = {
-					prodid: $(this).children().attr('id'),
+					addItemtoOrder(item);
+
+					//show sweetalert success message
+					swal(nameProduct, "is added to cart !", "success");
+
+				} else {
+					swal("You need to sign-in inorder to purchase?", {
+						buttons: {
+							cancel: "Cancel",
+							signup: "Sign-up",
+							signin: "Sign-in",
+						},
+						})
+						.then((value) => {
+						switch (value) {
+						
+							case "signin":
+							window.location = '/login/';
+							break;
+
+							case "signup":
+							window.location = '/signup/';
+							break;
+
+							default:
+							
+						}
+					});
 				}
-
-				addItemtoOrder(item);
-
-				//show sweetalert success message
-				swal(nameProduct, "is added to cart !", "success");
 			});
 		});
 

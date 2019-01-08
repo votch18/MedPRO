@@ -111,7 +111,8 @@ class Product extends Model
      * @return string seller id
      */
     public static function getSellerIdByProduct($prodid){
-        $products = $this->getProductById($prodid);
+        $product = new Product();
+        $products =$product->getProductById($prodid);
         return $products['custid'];
     }
 
@@ -139,7 +140,7 @@ class Product extends Model
      */
     public function getProductById($id){
         $id = $this->db->escape($id);
-        $sql = "SELECT *,
+        $sql = "SELECT a.*, b.*,
                     (b.description) as categories,
                     c.company
                     FROM t_products a

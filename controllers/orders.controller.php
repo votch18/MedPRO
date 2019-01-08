@@ -7,9 +7,10 @@ class OrdersController extends Controller{
         $this->model = new Order();
     }
 
-    public function index(){
-        $this->data = $this->model->getOrders();
+    public function index(){        
+        $this->data =  $this->model->getOrderByCustomer();
     }
+
 
     public function myaccount_index(){
         $this->data = $this->model->getProductsByCustomer();
@@ -54,8 +55,7 @@ class OrdersController extends Controller{
 
     public function ajax_getorders(){
         if( isset($_POST) ){       
-            $data = $this->model->getOrderCountByCustomer();       
-            $this->data =  json_encode( array('message' => $data['count']) );
+            $this->data =  json_encode( $this->model->getOrderByCustomer() );
         }
     }
 }

@@ -30,6 +30,34 @@ $access = Session::get('access');
 
 	<script type="text/javascript" src="/assets/default/vendor/jquery/jquery-3.2.1.min.js"></script>	
 	<script type="text/javascript" src="/assets/default/vendor/sweetalert/sweetalert.min.js"></script>
+
+	<style>
+	/*Custom Scroll bar */
+	/* width */
+	::-webkit-scrollbar {
+	width: 5px;
+	}
+
+	/* Track */
+	::-webkit-scrollbar-track {
+	background: #f1f1f1; 
+	}
+	
+	/* Handle */
+	::-webkit-scrollbar-thumb {
+	background: #888; 
+	}
+
+	/* Handle on hover */
+	::-webkit-scrollbar-thumb {
+	border-radius: 2px;
+	}
+	/* Handle on hover */
+	::-webkit-scrollbar-thumb:hover {
+	background: #555;   
+	}
+	</style>
+
 </head>
 <body class="animsition">
 
@@ -75,24 +103,19 @@ $access = Session::get('access');
 					<nav class="menu">
 						<ul class="main_menu">
 							<li>
-								<a href="index.html">Home</a>
-								<ul class="sub_menu">
-									<li><a href="index.html">Homepage V1</a></li>
-									<li><a href="home-02.html">Homepage V2</a></li>
-									<li><a href="home-03.html">Homepage V3</a></li>
-								</ul>
+								<a href="/">Home</a>								
 							</li>
 
 							<li>
-								<a href="product.html">Shop</a>
+								<a href="/products/">Shop</a>
 							</li>
 
 							<li class="sale-noti">
-								<a href="product.html">Sale</a>
+								<a href="/products/sale/">Sale</a>
 							</li>
 
 							<li>
-								<a href="cart.html">Features</a>
+								<a href="/orders/">Features</a>
 							</li>
 
 							<li>
@@ -100,11 +123,11 @@ $access = Session::get('access');
 							</li>
 
 							<li>
-								<a href="about.html">About</a>
+								<a href="/home/about/">About</a>
 							</li>
 
 							<li>
-								<a href="contact.html">Contact</a>
+								<a href="/home/contact/">Contact</a>
 							</li>
 						</ul>
 					</nav>
@@ -147,71 +170,29 @@ $access = Session::get('access');
 						<?php } ?>
 						<!-- Header cart noti -->
 						<div class="header-cart header-dropdown">
-							<ul class="header-cart-wrapitem">
-								<li class="header-cart-item">
-									<div class="header-cart-item-img">
-										<img src="/assets/default/images/item-cart-01.jpg" alt="IMG">
-									</div>
+							<ul class="header-cart-wrapitem" id="cart-desktop">
+								
+								<!--
+									Orders Ajax
+								-->
 
-									<div class="header-cart-item-txt">
-										<a href="#" class="header-cart-item-name">
-											White Shirt With Pleat Detail Back
-										</a>
-
-										<span class="header-cart-item-info">
-											1 x $19.00
-										</span>
-									</div>
-								</li>
-
-								<li class="header-cart-item">
-									<div class="header-cart-item-img">
-										<img src="/assets/default/images/item-cart-02.jpg" alt="IMG">
-									</div>
-
-									<div class="header-cart-item-txt">
-										<a href="#" class="header-cart-item-name">
-											Converse All Star Hi Black Canvas
-										</a>
-
-										<span class="header-cart-item-info">
-											1 x $39.00
-										</span>
-									</div>
-								</li>
-
-								<li class="header-cart-item">
-									<div class="header-cart-item-img">
-										<img src="images/item-cart-03.jpg" alt="IMG">
-									</div>
-
-									<div class="header-cart-item-txt">
-										<a href="#" class="header-cart-item-name">
-											Nixon Porter Leather Watch In Tan
-										</a>
-
-										<span class="header-cart-item-info">
-											1 x $17.00
-										</span>
-									</div>
-								</li>
 							</ul>
 
-							<div class="header-cart-total">
-								Total: $75.00
+							<div class="header-cart-total" id="cart-total-desktop">
+								
 							</div>
 
 							<div class="header-cart-buttons">
 								<div class="header-cart-wrapbtn">
 									<!-- Button -->
-									<a href="cart.html" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+									<a href="/orders/" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
 										View Cart
 									</a>
 								</div>
 
 								<div class="header-cart-wrapbtn">
 									<!-- Button -->
-									<a href="#" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
+									<a href="/orders/checkout/" class="flex-c-m size1 bg1 bo-rad-20 hov1 s-text1 trans-0-4">
 										Check Out
 									</a>
 								</div>
@@ -226,7 +207,7 @@ $access = Session::get('access');
 		<div class="wrap_header_mobile">
 			<!-- Logo moblie -->
 			<a href="index.html" class="logo-mobile">
-				<img src="/assets/default/images/icons/logo.png" alt="IMG-LOGO">
+				<h1 style="font-weight: bold;">MedPro</h1>
 			</a>
 
 			<!-- Button show menu -->
@@ -245,58 +226,15 @@ $access = Session::get('access');
 
 						<!-- Header cart noti -->
 						<div class="header-cart header-dropdown">
-							<ul class="header-cart-wrapitem">
-								<li class="header-cart-item">
-									<div class="header-cart-item-img">
-										<img src="/assets/default/images/item-cart-01.jpg" alt="IMG">
-									</div>
+							<ul class="header-cart-wrapitem" id="cart-mobile">
+								
+								<!--
+									Orders Ajax
+								-->
 
-									<div class="header-cart-item-txt">
-										<a href="#" class="header-cart-item-name">
-											White Shirt With Pleat Detail Back
-										</a>
-
-										<span class="header-cart-item-info">
-											1 x $19.00
-										</span>
-									</div>
-								</li>
-
-								<li class="header-cart-item">
-									<div class="header-cart-item-img">
-										<img src="images/item-cart-02.jpg" alt="IMG">
-									</div>
-
-									<div class="header-cart-item-txt">
-										<a href="#" class="header-cart-item-name">
-											Converse All Star Hi Black Canvas
-										</a>
-
-										<span class="header-cart-item-info">
-											1 x $39.00
-										</span>
-									</div>
-								</li>
-
-								<li class="header-cart-item">
-									<div class="header-cart-item-img">
-										<img src="images/item-cart-03.jpg" alt="IMG">
-									</div>
-
-									<div class="header-cart-item-txt">
-										<a href="#" class="header-cart-item-name">
-											Nixon Porter Leather Watch In Tan
-										</a>
-
-										<span class="header-cart-item-info">
-											1 x $17.00
-										</span>
-									</div>
-								</li>
 							</ul>
 
-							<div class="header-cart-total">
-								Total: $75.00
+							<div class="header-cart-total"  id="cart-total-mobile">
 							</div>
 
 							<div class="header-cart-buttons">
@@ -362,25 +300,19 @@ $access = Session::get('access');
 					</li>
 
 					<li class="item-menu-mobile">
-						<a href="index.html">Home</a>
-						<ul class="sub-menu">
-							<li><a href="index.html">Homepage V1</a></li>
-							<li><a href="home-02.html">Homepage V2</a></li>
-							<li><a href="home-03.html">Homepage V3</a></li>
-						</ul>
-						<i class="arrow-main-menu fa fa-angle-right" aria-hidden="true"></i>
+						<a href="/">Home</a>
 					</li>
 
 					<li class="item-menu-mobile">
-						<a href="product.html">Shop</a>
+						<a href="/products/">Shop</a>
 					</li>
 
 					<li class="item-menu-mobile">
-						<a href="product.html">Sale</a>
+						<a href="/products/sale/">Sale</a>
 					</li>
 
 					<li class="item-menu-mobile">
-						<a href="cart.html">Features</a>
+						<a href="/orders/">Features</a>
 					</li>
 
 					<li class="item-menu-mobile">
@@ -388,11 +320,11 @@ $access = Session::get('access');
 					</li>
 
 					<li class="item-menu-mobile">
-						<a href="about.html">About</a>
+						<a href="/home/about/">About</a>
 					</li>
 
 					<li class="item-menu-mobile">
-						<a href="contact.html">Contact</a>
+						<a href="/home/contact/">Contact</a>
 					</li>
 				</ul>
 			</nav>
@@ -655,7 +587,7 @@ $access = Session::get('access');
 				headers: {'X-Requested-With': 'XMLHttpRequest'},
 				success: function (response) {
 					if (response) {    
-						console.log(response);   
+						
 					}
 				}
 			});
@@ -667,8 +599,41 @@ $access = Session::get('access');
 		setInterval(() => {
 			getOrders().done(function($data) {
 				$data = JSON.parse($data);
-				$qty = $data.message;
+
+				var $qty = $data.length;
 				$('.header-icons-noti').text( $qty );
+
+				var $orders = '';
+				var $total = 0;
+
+				$.each( $data, function(index, value){
+
+					var $photo = value.images.split(',');
+
+					$orders += '	<li class="header-cart-item">' +
+									'<div class="header-cart-item-img">' +
+										'<img src="/uploads/products/' + $photo[0] + '" alt="IMG">' + 
+									'</div>' +
+									'<div class="header-cart-item-txt">' +
+										'<a href="#" class="header-cart-item-name">' +
+											value.name +
+										'</a>' +
+
+										'<span class="header-cart-item-info">' +
+											value.price +
+										'</span>' +
+									'</div>' +
+								'</li>';
+
+					$total += parseFloat(value.price);
+				});
+
+				$('#cart-desktop').html($orders);
+				$('#cart-mobile').html($orders);
+
+				$('#cart-total-desktop').html($total.toFixed(2));
+				$('#cart-total-mobile').html($total.toFixed(2));
+			
 			});
 		}, 1000);
 	</script>

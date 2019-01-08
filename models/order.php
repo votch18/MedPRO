@@ -39,6 +39,33 @@ class Order extends Model
         return false;
     }
 
+    
+    public function getOrderByCustomer(){
+
+        $custid = Session::get('userid');
+
+        $sql = "SELECT 
+                a.id,
+                a.qty,
+                a.prodid,
+                a.price,
+                a.date,
+                a.seller,
+                a.custid,
+                a.delivery_address,
+                a.status,
+                b.name,
+                b.description,
+                b.images
+                FROM t_orders a
+                INNER JOIN t_products b on b.prodid = a.prodid
+                WHERE a.custid = '{$custid}' AND a.status = 1
+                ";
+      
+        return  $this->db->query($sql);;
+    }
+
+
     public function save($data, $id = null){
 
         $prodid = $data['prodid'];
@@ -77,6 +104,17 @@ class Order extends Model
 
         return $this->db->query($sql);
 
+    }
+
+
+     /**
+     * @param string $id
+     * @return bool
+     */
+    public function delete($id){
+        $sql = "DELETE FROM t_orders WHERE id = '{$id}'";
+
+        return $this->db->query($sql);
     }
 
 

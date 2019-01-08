@@ -33,7 +33,7 @@
 				</h4>
 
 				<span class="m-text17">
-					<?=$this->data['price']?>
+					<?=Util::number_format($this->data['price'])?>
 				</span>
 
 				<p class="s-text8 p-t-10">
@@ -418,16 +418,41 @@
 		$('.btn-addcart-product-detail').each(function(){
 			var nameProduct = $('.product-detail-name').html();
 			$(this).on('click', function(){
+				var $userid = "<?=Session::get('userid')?>";
+				if( $userid != ""){
+					var item = {
+						prodid: "<?=$this->data['prodid']?>",
+						qty: $('.num-product').val()
+					}
 
-				var item = {
-					prodid: "<?=$this->data['prodid']?>",
-					qty: $('.num-product').val()
+					addItemtoOrder(item);
+
+					//show sweetalert success message
+					swal(nameProduct, "is added to cart !", "success");
+				} else {
+					swal("You need to sign-in inorder to purchase?", {
+						buttons: {
+							cancel: "Cancel",
+							signup: "Sign-up",
+							signin: "Sign-in",
+						},
+						})
+						.then((value) => {
+						switch (value) {
+						
+							case "signin":
+							window.location = '/login/';
+							break;
+
+							case "signup":
+							window.location = '/signup/';
+							break;
+
+							default:
+							
+						}
+					});
 				}
-
-				addItemtoOrder(item);
-
-				//show sweetalert success message
-				swal(nameProduct, "is added to cart !", "success");
 			});
 		});
 
