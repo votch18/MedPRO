@@ -33,6 +33,9 @@ class Member extends Model{
         return $this->db->query($sql);
     }
 
+    /**
+     * @return bool
+     */
     public function getDeletedMembers(){
 
         $sql = "SELECT a.*,
@@ -44,6 +47,10 @@ class Member extends Model{
         return $this->db->query($sql);
     }
 
+    /**
+     * @param mixed $name
+     * @return array
+     */
 	public function searchMembers($name){
 
         $sql = "SELECT 
@@ -56,7 +63,11 @@ class Member extends Model{
 
         return $this->db->query($sql);
     }
-	
+    
+     /**
+     * @param mixed $name
+     * @return array
+     */
     public function getMemberswithOutLoan($name){
 
         $sql = "SELECT 
@@ -70,6 +81,10 @@ class Member extends Model{
         return $this->db->query($sql);
     }
 
+    /**
+     * @param mixed $name
+     * @return array
+     */
     public function getMemberswithLoan($name){
 
         $sql = "SELECT 
@@ -84,7 +99,10 @@ class Member extends Model{
         return $this->db->query($sql);
     }
 
-
+     /**
+     * @param mixed $id
+     * @return array
+     */
     public function getMemberById($id){
         $id = $this->db->escape($id);
         $sql = "SELECT 
