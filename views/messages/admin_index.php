@@ -1,10 +1,5 @@
 <div class="col-lg-12">
-    <div class="au-card au-card--no-shadow au-card--no-pad m-b-40">
-        <div class="au-card-title" style="background-image:url('images/bg-title-02.jpg');">
-            <div class="bg-overlay bg-overlay--blue"></div>
-            <h3>
-                <i class="zmdi zmdi-comment-text"></i>Messages</h3>         
-        </div>
+    <div class="au-card au-card--no-shadow au-card--no-pad m-b-40">        
         <div class="au-inbox-wrap js-inbox-wrap">
             <div class="au-message js-list-load">
                 <div class="au-message__noti">

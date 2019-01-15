@@ -88,49 +88,22 @@ class Message extends Model
     }
     
     /**
-     * get all coupon codes which is used
-     * @return array
-     */
-    public function getUsedCoupons(){
-        $sql = "SELECT * FROM t_coupons WHERE status = 2";
-
-        return $this->db->query($sql);
-    }
-   
-    /**
      * Add new coupon code
      * @return bool
      */
-    public function addCoupon($data){
-        $coupon = $this->db->escape($data['coupon']);
-        $discount = $this->db->escape($data['discount']);
-        $type = $this->db->escape($data['discount_type']);
+    public function send($data){
+        $receiver = $this->db->escape($data['receiver']);
+        $message = $this->db->escape($data['message']);
+        $sender = Session::get('userid');
 
-        //if coupon exist in database then exit
-        if ( self::checkCouponCode($coupon) ) return false;
-
-        $sql = "INSERT INTO `t_coupons` 
+        $sql = "INSERT INTO `t_messages` 
             SET 
-            `coupon_code`= '{$coupon}',
-            `discount`= '{$discount}',
-            `discount_type`= '{$type}'
+            `sender`= '{$sender}',
+            `receiver`= '{$receiver}',
+            `message`= '{$message}',
+            `date` = NOW()
             ";
 
         return $this->db->query($sql);
-    }
-
-    public function checkCouponCode($coupon){
-
-        $sql = "SELECT *
-                    FROM t_coupons a
-                    WHERE
-                    a.coupon_code ='{$coupon}'";
-
-        $result = $this->db->query($sql);
-        if (isset($result[0])){
-            return $result[0];
-        }
-        return false;
-
     }
 }

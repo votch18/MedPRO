@@ -59,14 +59,14 @@
                 var id = $(this).attr('id');
                                 
                 //set post data
-                var member = {
+                var product = {
                     id: $(this).attr('id'),
                 }
                 
-                if (deleteProduct(member)) {
+                if (deleteProduct(product)) {
                     swal(
                     'Deleted!',
-                    'Member has been successfully deleted.',
+                    'Your file has been deleted.',
                     'success'
                     )
 
@@ -78,12 +78,12 @@
         
     });
 
-    function deleteMember(member){
+    function deleteProduct(product){
         
         return $.ajax({
             type: 'POST',
             url: '/ajax/members/delete/',
-            data: member,
+            data: product,
             dataType: 'json',
             crossDomain: true,
             headers: {'X-Requested-With': 'XMLHttpRequest'},
@@ -92,6 +92,9 @@
                 console.log(response)
                 switch(response.message){
                     case 'success': 
+                    //window.location.href = 'index'
+
+                    console.log('saved');
                     break
                     
                     case 'error':

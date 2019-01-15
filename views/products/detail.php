@@ -36,9 +36,10 @@
 					<?=Util::number_format($this->data['price'])?>
 				</span>
 
-				<p class="s-text8 p-t-10">
-					By: <?=$this->data['company']?>
+				<p class="s-text8 p-t-10 pb-2">
+					By: <?=$this->data['company']?> 					
 				</p>
+				<a href="#" id="msg" class="btn btn-outline-dark"><i class="fa fa-comment-o fa-lg"></i> Inquire</a>
 
 				<!--  -->
 				<div class="p-t-33 p-b-60">
@@ -421,6 +422,32 @@
 		</div>
 	</section>
 
+	<!-- Option Modal -->
+	<div class="modal fade" id="msgModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<form id="option" action="" method="POST" enctype="multipart/form-data">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title">Inquire <?=$this->data['company']?></h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="form-group">
+							<input type="hidden" id="receiver" name="receiver" value="<?=$this->data['custid']?>">
+							<textarea id="message" name="message" class="form-control" style="height: 100px;" placeholder="Your message here..."></textarea>
+						</div>      
+						<div class="form-group text-right">		
+							<button class="btn btn-primary" id="send"><i class="fa fa-send"></i> Send</button>
+						</div>     
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+
 	<script>
 	
 		/**
@@ -501,7 +528,69 @@
 			});
 		}
 
+		$('#msg').on('click', function (e) {		
+			$('#msgModal').modal("toggle");
+		});
 
+
+		$('#send').on('click', function (e) {
+			e.preventDefault();
+
+			var message = {
+				receiver: $("#receiver").val(),
+				message: $("#message").val(),
+			}
+
+			sendMessage(message).done(function($data){
+				$data = JSON.parse($data);
+
+				if ($data.result){
+					$('#msgModal').modal("toggle");
+					
+					swal({
+                        title: "Success",
+                        text: "Your message has been successfully sent!",
+                        type: "success",
+                        confirmButtonText: '',
+                        showCancelButton: true,
+                        showConfirmButton: false,
+                    });
+				}
+			});
+		});
+
+
+			/**
+		 * Add product to cart
+		 */
+		function sendMessage(message){
+			
+			return $.ajax({
+				type: 'POST',
+				url: '/ajax/messages/send/',
+				data: message,
+				dataType: 'json',
+				crossDomain: true,
+				headers: {'X-Requested-With': 'XMLHttpRequest'},
+				success: function(response){
+					switch(response.message){
+						case 'success': 
+							break
+						case 'error':
+							//show sweetalert error message
+							swal({
+								title: "Error",
+								text: "An error occured while saving your changes",
+								type: "error",
+								confirmButtonText: '',
+								showCancelButton: true,
+								showConfirmButton: false,
+							});
+							break
+					}
+				}
+			});
+		}
 	</script>
 
 	<style>

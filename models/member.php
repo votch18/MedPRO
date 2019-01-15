@@ -26,7 +26,7 @@ class Member extends Model{
 
         $sql = "SELECT a.*, b.*
                     FROM t_accounts a 
-                    INNER JOIN t_customers b on a.custid = b.custid
+                    LEFT JOIN t_customers b on a.custid = b.custid
                     WHERE a.type = '{$type}'
                     order by a.lname, a.fname";
 
@@ -65,41 +65,6 @@ class Member extends Model{
     }
     
      /**
-     * @param mixed $name
-     * @return array
-     */
-    public function getMemberswithOutLoan($name){
-
-        $sql = "SELECT 
-                    a.member_id, 
-                    concat(lname, ' ', fname, ' ', mname) as name
-                    FROM t_members a 
-                    left join t_loans b on a.member_id = b.member_id 
-                    where a.is_active = 1 and ifnull(b.status, 2) > 1 and concat(lname, ', ', fname, ' ', mname) like '%{$name}%' 
-                    limit 0, 4";
-
-        return $this->db->query($sql);
-    }
-
-    /**
-     * @param mixed $name
-     * @return array
-     */
-    public function getMemberswithLoan($name){
-
-        $sql = "SELECT 
-                b.loan_id,
-                a.member_id, 
-                concat(lname, ' ', fname, ' ', mname) as name
-                from t_members a 
-                left join t_loans b on a.member_id = b.member_id 
-                where a.is_active = 1 and ifnull(b.status, 0) = 1 and concat(a.lname, ', ', a.fname, ' ', a.mname) like '%{$name}%' 
-                limit 0, 5";
-
-        return $this->db->query($sql);
-    }
-
-     /**
      * @param mixed $id
      * @return array
      */
@@ -131,20 +96,6 @@ class Member extends Model{
                     LEFT JOIN l_barangay b on b.lid = a.brgy
                     LEFT JOIN l_municipality c on c.lid = a.municipality
                     LEFT JOIN l_province d on d.lid = a.province
-                    WHERE a.member_id ='{$id}' 
-                    LIMIT 1";
-
-        $result = $this->db->query($sql);
-        if (isset($result[0])){
-            return $result[0];
-        }
-        return false;
-    }
-
-    public function getMemberDataById($id){
-        $id = $this->db->escape($id);
-        $sql = "SELECT *
-                    FROM t_members a
                     WHERE a.member_id ='{$id}' 
                     LIMIT 1";
 

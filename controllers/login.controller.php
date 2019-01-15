@@ -24,7 +24,8 @@ class LoginController extends Controller{
         }
 
         if ($_POST && isset ( $_POST['username']) && isset ($_POST['password'])){
-            if ( $this->model->loginAdmin($_POST['username'], $_POST['password'], $_POST['remember']) ){
+            $remember = isset($_POST['remember']) ? true : false;
+            if ( $this->model->loginAdmin($_POST['username'], $_POST['password'], $remember) ){
                 Router::redirect('/admin/');
             } else {
                 Session::setFlash("Invalid username or password!");

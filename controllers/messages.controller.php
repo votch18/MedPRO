@@ -43,5 +43,9 @@ class MessagesController extends Controller{
         $note = new Notification();       
         $this->data =  json_encode( $note->mark_as_read_admin() );
     }
+
+    public function ajax_send(){             
+        $this->data =  json_encode( array( 'result' => $this->model->send($_POST) ));
+    }
     /** End ajax admin */
 }
