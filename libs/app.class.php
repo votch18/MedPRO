@@ -49,7 +49,7 @@ class App{
         if ($layout == 'admin'){
             if ( !isset($access) && self::$router->getController() != 'login'){
                 Router::redirect('/admin/login/');
-            }         
+            }       
         }
 
         //TODO: handle seller and buyer account access

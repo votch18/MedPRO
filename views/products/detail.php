@@ -88,7 +88,7 @@
 					</div>
 				</div>
 
-				<div class="wrap-dropdown-content bo7 p-t-15 p-b-14">
+				<div class="wrap-dropdown-content bo7 p-t-15 p-b-14 active-dropdown-content">
 					<h5 class="js-toggle-dropdown-content flex-sb-m cs-pointer m-text19 color0-hov trans-0-4">
 						Additional information
 						<i class="down-mark fs-12 color1 fa fa-minus dis-none" aria-hidden="true"></i>
@@ -104,27 +104,69 @@
 
 				<div class="wrap-dropdown-content bo7 p-t-15 p-b-14">
 					<h5 class="js-toggle-dropdown-content flex-sb-m cs-pointer m-text19 color0-hov trans-0-4">
-						Reviews (0) 
-						<fieldset class="rating">
-							<input type="radio" id="star5" name="rating" value="5" /><label class = "full" for="star5" title="Awesome - 5 stars"></label>
-							<input type="radio" id="star4half" name="rating" value="4 and a half" checked/><label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
-							<input type="radio" id="star4" name="rating" value="4" /><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
-							<input type="radio" id="star3half" name="rating" value="3 and a half" /><label class="half" for="star3half" title="Meh - 3.5 stars"></label>
-							<input type="radio" id="star3" name="rating" value="3" /><label class = "full" for="star3" title="Meh - 3 stars"></label>
-							<input type="radio" id="star2half" name="rating" value="2 and a half" /><label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
-							<input type="radio" id="star2" name="rating" value="2" /><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
-							<input type="radio" id="star1half" name="rating" value="1 and a half" /><label class="half" for="star1half" title="Meh - 1.5 stars"></label>
-							<input type="radio" id="star1" name="rating" value="1" /><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
-							<input type="radio" id="starhalf" name="rating" value="half" /><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
+						Reviews 					
+						<?php
+							$rating = new Rate();
+							$ratings = $rating->getRatingsByProductId($this->data['prodid']);
+							
+							if( $ratings ) {
+								echo '('.Util::number_format($ratings['ratings']).')';
+								$ratings = (int)$ratings['ratings'];
+						?>
+
+						<fieldset class="rate">
+							<input type="radio" id="star5" name="rate" value="5" <?php if( $ratings == 5 ) echo 'checked'; ?>/><label class = "full" for="star5" title="Awesome - 5 stars"></label>
+							<input type="radio" id="star4half" name="rate" value="4 and a half" <?php if( $ratings < 5 && $ratings >= 4.5 ) echo 'checked'; ?>/><label class="half" for="star4half" title="Pretty good - 4.5 stars"></label>
+							<input type="radio" id="star4" name="rate" value="4" <?php if( $ratings == 4 ) echo 'checked'; ?>/><label class = "full" for="star4" title="Pretty good - 4 stars"></label>
+							<input type="radio" id="star3half" name="rate" value="3 and a half" <?php if( $ratings < 4 && $ratings >= 3.5 ) echo 'checked'; ?>/><label class="half" for="star3half" title="Meh - 3.5 stars"></label>
+							<input type="radio" id="star3" name="rate" value="3" <?php if( $ratings == 3 ) echo 'checked'; ?>/><label class = "full" for="star3" title="Meh - 3 stars"></label>
+							<input type="radio" id="star2half" name="rate" value="2 and a half" <?php if( $ratings < 3 && $ratings >= 2.5 ) echo 'checked'; ?>/><label class="half" for="star2half" title="Kinda bad - 2.5 stars"></label>
+							<input type="radio" id="star2" name="rate" value="2" <?php if( $ratings == 2 ) echo 'checked'; ?>/><label class = "full" for="star2" title="Kinda bad - 2 stars"></label>
+							<input type="radio" id="star1half" name="rate" value="1 and a half" <?php if( $ratings < 2 && $ratings >= 1.5 ) echo 'checked'; ?>/><label class="half" for="star1half" title="Meh - 1.5 stars"></label>
+							<input type="radio" id="star1" name="rate" value="1" <?php if( $ratings == 1 ) echo 'checked'; ?>/><label class = "full" for="star1" title="Sucks big time - 1 star"></label>
+							<input type="radio" id="starhalf" name="rate" value="half" <?php if( $ratings < 1 && $ratings >= 0.5 ) echo 'checked'; ?>/><label class="half" for="starhalf" title="Sucks big time - 0.5 stars"></label>
 						</fieldset>
+						<?php
+							}
+						?>
 						<i class="down-mark fs-12 color1 fa fa-minus dis-none" aria-hidden="true"></i>
 						<i class="up-mark fs-12 color1 fa fa-plus" aria-hidden="true"></i>
 					</h5>
 					
-					<div class="dropdown-content dis-none p-t-15 p-b-23">
-						<p class="s-text8">
-							Fusce ornare mi vel risus porttitor dignissim. Nunc eget risus at ipsum blandit ornare vel sed velit. Proin gravida arcu nisl, a dignissim mauris placerat
-						</p>
+					<div class="dropdown-content dis-none  p-t-15 p-b-23">
+						<?php
+							$ratings = $rating->getRatings($this->data['prodid']);
+
+							foreach( $ratings as $row ) {
+						?>
+							<p class="s-text8">
+							<?=$row['message']?>
+							</p>
+						<?php
+							}
+						?>
+						<div style="padding: 20px; background-color: #f8f8f8; border-radius: 10px;">
+							<form method="POST" action="/ratings/rate/<?=$this->data['prodid']?>/">
+								<input type="hidden" name="prodid" value="<?=$this->data['prodid']?>"/>
+								<div class="form-group">
+									<label for="rating">Rate</label>
+									<select name="rating" class="form-control">
+										<option value="5">5 - Awesome</option>
+										<option value="4">4 - Pretty good</option>
+										<option value="3">3 - Good</option>
+										<option value="2">2 - Kinda bad</option>
+										<option value="1">1 - Bad</option>
+									</select>
+								</div>
+								<div class="form-group">
+									<label for="message">Remarks</label>
+									<textarea name="message" rows="5" class="form-control"></textarea>
+								</div>
+								<div class="form-group">
+									<button class="btn btn-success">Rate Now</button>
+								</div>
+							</form>
+						</div>
 					</div>
 				</div>
 			</div>
@@ -597,16 +639,16 @@
 		fieldset, label { margin: 0; padding: 0; }
 		body{ margin: 20px; }
 		h1 { font-size: 1.5em; margin: 10px; }
-
-		/****** Style Star Rating Widget *****/
-
-		.rating { 
+	
+		/** rate **/
+		
+		.rate { 
 		border: none;
 		float: left;
 		}
 
-		.rating > input { display: none; } 
-		.rating > label:before { 
+		.rate > input { display: none; } 
+		.rate > label:before { 
 		margin: 5px;
 		font-size: 1.25em;
 		font-family: FontAwesome;
@@ -614,24 +656,16 @@
 		content: "\f005";
 		}
 
-		.rating > .half:before { 
+		.rate > .half:before { 
 		content: "\f089";
 		position: absolute;
 		}
 
-		.rating > label { 
+		.rate > label { 
 		color: #ddd; 
 		float: right; 
 		}
 
-		/***** CSS Magic to Highlight Stars on Hover *****/
+		.rate > input:checked ~ label { color: #FFD700; }
 
-		.rating > input:checked ~ label, /* show gold star when clicked */
-		.rating:not(:checked) > label:hover, /* hover current star */
-		.rating:not(:checked) > label:hover ~ label { color: #FFD700;  } /* hover previous stars in list */
-
-		.rating > input:checked + label:hover, /* hover current star when changing rating */
-		.rating > input:checked ~ label:hover,
-		.rating > label:hover ~ input:checked ~ label, /* lighten current selection */
-		.rating > input:checked ~ label:hover ~ label { color: #FFED85;  } 
 	</style>

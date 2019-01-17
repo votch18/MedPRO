@@ -28,6 +28,7 @@ class ProductsController extends Controller{
        
     }
 
+
     /** Start Admin Pages */
     public function admin_index(){
         $this->data = $this->model->getProducts();

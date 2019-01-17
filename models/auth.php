@@ -89,14 +89,14 @@ class Auth extends Model
         $log = new Log();
         $log->save( 'Log-out' );
 
-        setcookie("email", "", time()-86400, "/");
-        setcookie('userid', "", time()-86400, "/");
-        setcookie('username', "", time() + (86400), "/");
-        setcookie('email', "", time() + (86400), "/");
-        setcookie('access', "", time() + (86400), "/");
-        setcookie('avatar', "", time() + (86400), "/");
-        setcookie('fname', "", time() + (86400), "/");
-        setcookie('lname', "", time() + (86400), "/");
+        setcookie("email", "", time() - (86400), "/");
+        setcookie('userid', "", time() - (86400), "/");
+        setcookie('username', "", time() - (86400), "/");
+        setcookie('email', "", time() - (86400), "/");
+        setcookie('access', "", time() - (86400), "/");
+        setcookie('avatar', "", time() - (86400), "/");
+        setcookie('fname', "", time() - (86400), "/");
+        setcookie('lname', "", time() - (86400), "/");
 
         Session::destroy();        
     }
