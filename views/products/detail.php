@@ -144,6 +144,10 @@
 							</p>
 						<?php
 							}
+							$count = $rating->getRatingsByCustomerByProduct($this->data['prodid']);
+							if ((int)$count['count'] < 0 && Session::get('userid') != "") {
+
+								
 						?>
 						<div style="padding: 20px; background-color: #f8f8f8; border-radius: 10px;">
 							<form method="POST" action="/ratings/rate/<?=$this->data['prodid']?>/">
@@ -167,6 +171,10 @@
 								</div>
 							</form>
 						</div>
+
+						<?php
+							}
+						?>
 					</div>
 				</div>
 			</div>

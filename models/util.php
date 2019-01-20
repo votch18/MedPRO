@@ -37,6 +37,41 @@ class Util extends Model {
     }
 
     /**
+     * @param $value string
+     * @return string 
+     */
+    public static function get_chat_time($value){
+        $to_time = strtotime($value);
+        $from_time = strtotime("now");
+
+        $time = $from_time - $to_time;
+
+       // return $to_time.' - '.$from_time;
+
+        $seconds = floor($time);
+        $minutes = floor($seconds / 60);
+        $hours = floor($minutes / 60);
+        $days = floor($hours / 24);
+        $months = floor($days / 30);
+        $years = floor($months / 12);
+
+        if ( $years > 0 ) {
+           return ($years == 1) ? '1 year ago' : $years.' years ago';
+        } else if ( $months > 0 ) {
+            return ($months == 1) ? '1 month ago' : $months.' months ago';
+        } else if ( $days > 0 ) {
+            return ($days == 1) ? '1 day ago' : $days.' days ago';
+        } else if ( $hours > 0 ) {
+            return ($hours == 1) ? '1 hour ago' : $hours.' hours ago';
+        } else if ( $minutes > 0 ) {
+            return ($minutes == 1) ? '1 minute ago' : $minutes.' minutes ago';
+        } else {
+            return ($seconds == 1) ? '1 second ago' : $seconds.' seconds ago';
+        }
+
+    }
+
+    /**
      * convert number to words
      * @param $number mixed
      * @return string

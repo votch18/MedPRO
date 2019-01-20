@@ -38,6 +38,34 @@
     <!-- Jquery JS-->
     <script src="/assets/admin/vendor/jquery-3.2.1.min.js"></script>
 
+    <style>
+	/*Custom Scroll bar */
+	/* width */
+	::-webkit-scrollbar {
+	width: 5px;
+	}
+
+	/* Track */
+	::-webkit-scrollbar-track {
+	background: #f1f1f1; 
+	}
+	
+	/* Handle */
+	::-webkit-scrollbar-thumb {
+	background: #888; 
+	}
+
+	/* Handle on hover */
+	::-webkit-scrollbar-thumb {
+	border-radius: 2px;
+	}
+	/* Handle on hover */
+	::-webkit-scrollbar-thumb:hover {
+	background: #0080ff;   
+	}
+	</style>
+
+
 </head>
 <body class="animsition">
 <div class="page-wrapper">
@@ -198,10 +226,13 @@
           <div class="page-container3">
             <section class="alert-wrap p-t-70 p-b-70">
                 <div class="container">
+                    <?php
+                        if (Session::hasFlash()){ 
+                    ?>
                     <!-- ALERT-->
-                    <div class="alert au-alert-success alert-dismissible fade show au-alert au-alert--70per" role="alert">
+                    <div class="alert alert-dismissible fade show au-alert au-alert--70per" role="alert">
                         <i class="zmdi zmdi-check-circle"></i>
-                        <span class="content">You successfully read this important alert message.</span>
+                        <span class="content"><?=Session::flash()?></span>
                         <button class="close" type="button" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">
                                 <i class="zmdi zmdi-close-circle"></i>
@@ -209,6 +240,9 @@
                         </button>
                     </div>
                     <!-- END ALERT-->
+                    <?php
+                        }
+                    ?>
                 </div>
             </section>
             <section>
@@ -219,7 +253,7 @@
                             <aside class="menu-sidebar3 js-spe-sidebar">
                                 <nav class="navbar-sidebar2 navbar-sidebar3">
                                     <ul class="list-unstyled navbar__list" style="border-top: 5px solid #4272d7;">
-                                        <li class="active has-sub">
+                                        <li class="has-sub <?=App::getRouter()->getController() == 'home' ? 'active' : '' ?>">
                                             <a class="js-arrow" href="#">
                                                 <i class="fas fa-tachometer-alt"></i>Dashboard
                                                 <span class="arrow">
@@ -241,16 +275,16 @@
                                                 </li>
                                             </ul>
                                         </li>
-                                        <li>
-                                            <a href="inbox.html">
+                                        <li class="<?=App::getRouter()->getController() == 'messages' ? 'active' : '' ?>">
+                                            <a href="/me/messages/">
                                                 <i class="fas fa-chart-bar"></i>Inbox</a>
-                                            <span class="inbox-num">3</span>
+                                            <span class="inbox-num" id="inbox">1</span>
                                         </li>
-                                        <li>
-                                            <a href="#">
+                                        <li class="<?=App::getRouter()->getController() == 'products' ? 'active' : '' ?>">
+                                            <a href="/me/products/">
                                                 <i class="fas fa-medkit"></i>Products</a>
                                         </li>
-                                        <li class="has-sub <?=App::getRouter()->getController() == 'products' ? 'active' : '' ?>" >
+                                        <li class="has-sub " >
                                             <a class="js-arrow" href="#">
                                                 <i class="fas fa-trophy"></i>Ratings
                                                 <span class="arrow">
@@ -458,6 +492,41 @@
 			});
 		}
 
+        setInterval(() => {
+			get_unread_messages().done(function($data) {
+				$data = JSON.parse($data);
+                
+                $('span#inbox.inbox-num').text($data.count);
+
+			});
+		}, 5000);
+
+
+        /**
+		 * mark all notifications as read
+		 */
+		function get_unread_messages(){
+			
+			return $.ajax({
+				type: 'POST',
+				url: '/ajax/messages/get_unread_messages/',
+				data: { action: "get_unread_messages" },
+				dataType: 'json',
+				crossDomain: true,
+				headers: {'X-Requested-With': 'XMLHttpRequest'},
+				success: function (response) {
+					if (response) {    
+					}
+				}
+			});
+		}
+
+        get_unread_messages().done(function($data) {
+            $data = JSON.parse($data);
+            
+            $('span#inbox.inbox-num').text($data.count);
+
+        });
 	</script>
 
 	<?php } ?>

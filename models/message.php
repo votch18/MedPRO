@@ -33,7 +33,7 @@ class Message extends Model
             FROM t_messages a
             INNER JOIN (SELECT MAX(x.id) as id, (LEAST(x.receiver, x.sender)) as threadid_1, (GREATEST(x.receiver, x.sender)) as threadid_2, count(DISTINCT(x.id)) as total FROM t_messages x GROUP BY threadid_1, threadid_2) c on c.id = a.id
             GROUP BY threadid_1, threadid_2
-            ORDER BY a.date DESC";
+            ORDER BY a.date ASC";
 
         return $this->db->query($sql);
     }
@@ -49,9 +49,10 @@ class Message extends Model
         $sql = "SELECT 
             a.*,
             (SELECT CONCAT(x.fname, ' ', x.lname) FROM t_accounts x WHERE x.custid = a.receiver) as receiver_name,
-            (SELECT CONCAT(x.fname, ' ', x.lname) FROM t_accounts x WHERE x.custid = a.sender) as sender_name,
-            FROM messages a
-            WHERE a.sender in ($sender, $receiver) AND a.receiver in ($sender, $receiver)
+            (SELECT CONCAT(x.fname, ' ', x.lname) FROM t_accounts x WHERE x.custid = a.sender) as sender_name,            
+            (SELECT x.photo FROM t_accounts x WHERE x.custid = a.sender) as sender_pic
+            FROM t_messages a
+            WHERE a.sender in ('{$sender}', '{$receiver}') AND a.receiver in ('{$sender}', '{$receiver}')
             GROUP BY a.id
             ORDER BY a.date ASC";
 
@@ -60,10 +61,11 @@ class Message extends Model
 
     /**
      * get all message send to the currently logged-in customer
+     * @param mixed|null $id
      * @return array
      */
-    public function getMessagesByCustomerId($id){
-        $id = $this->db->escape($id);
+    public function getMessagesByCustomerId($id = null){
+        $id = is_null($id) ? Session::get('userid') : $this->db->escape($id);
 
         $sql = "SELECT 
             a.id,
@@ -78,11 +80,11 @@ class Message extends Model
             a.message,
             c.threadid
             FROM t_messages a
-            INNER JOIN (SELECT MAX(x.id) as id, (CASE WHEN x.sender = $id THEN x.receiver ELSE x.sender END) as threadid, count(*) as total FROM t_messages x WHERE x.receiver = $id OR x.sender = $id GROUP BY threadid) c on c.id = a.id
-            RIGHT JOIN t_accounts b on b.custid = (CASE WHEN a.sender = $id THEN a.receiver ELSE a.sender END)
-            WHERE a.receiver = $id OR a.sender = $id 
+            INNER JOIN (SELECT MAX(x.id) as id, (CASE WHEN x.sender = '{$id}' THEN x.receiver ELSE x.sender END) as threadid, count(*) as total FROM t_messages x WHERE x.receiver = '{$id}' OR x.sender = '{$id}' GROUP BY threadid) c on c.id = a.id
+            RIGHT JOIN t_accounts b on b.custid = (CASE WHEN a.sender = '{$id}' THEN a.receiver ELSE a.sender END)
+            WHERE a.receiver = '{$id}' OR a.sender = '{$id}' 
             GROUP BY threadid
-            ORDER BY a.date DESC";
+            ORDER BY a.date ASC";
 
         return $this->db->query($sql);
     }
@@ -95,15 +97,46 @@ class Message extends Model
         $receiver = $this->db->escape($data['receiver']);
         $message = $this->db->escape($data['message']);
         $sender = Session::get('userid');
+        $today = date("Y-m-d H:i:s");
 
         $sql = "INSERT INTO `t_messages` 
             SET 
             `sender`= '{$sender}',
             `receiver`= '{$receiver}',
             `message`= '{$message}',
-            `date` = NOW()
+            `date` = '{$today}'
             ";
 
         return $this->db->query($sql);
     }
+
+    /**
+     * @return bool
+     */
+    public function mark_as_read(){
+        $id = Session::get('userid');
+
+        $sql = "UPDATE t_messages SET is_read = 1 WHERE receiver = '{$id}'";
+
+        return $this->db->query($sql);
+    }
+
+    public function get_unread_messages(){
+
+        $id = Session::get('userid');
+
+        $sql = "SELECT 
+                COUNT(*) as count
+                FROM t_messages a
+                WHERE a.receiver = '{$id}' AND a.is_read = 0
+                ";
+
+        $result = $this->db->query($sql);
+        if (isset($result[0])){
+            return $result[0];
+        }
+        return false;
+    }
+
+
 }

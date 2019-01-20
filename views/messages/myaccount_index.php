@@ -21,8 +21,11 @@
                         } else {
                             $img = "admin.png";
                         }
+
+                        $sender = ($row['sender'] == Session::get('userid')) ? $row['receiver'] : $row['sender'];
                 ?>
-                    <div class="au-message__item unread">
+                
+                    <div class="au-message__item unread msg" id="<?=$sender?>">
                         <div class="au-message__item-inner">
                             <div class="au-message__item-text">
                                 <div class="avatar-wrap">
@@ -31,7 +34,7 @@
                                     </div>
                                 </div>
                                 <div class="text">
-                                    <h5 class="name"><?=$row['sender_name'].' & '.$row['receiver_name'].' conversation'?></h5>
+                                    <h5 class="name"><?=$row['sender_name']?></h5>
                                     <p><?=$row['message']?></p>
                                 </div>
                             </div>
@@ -40,7 +43,6 @@
                             </div>
                         </div>
                     </div>
-
                 <?php
                     }
                 ?>                   
@@ -51,3 +53,13 @@
         </div>
     </div>
 </div>
+
+<script>
+    
+    $('body').on('click', '.msg', function(e){
+        e.preventDefault();
+        var id = $(this).attr('id');
+        window.location = "/me/messages/chat/" + id;
+    });
+
+</script>

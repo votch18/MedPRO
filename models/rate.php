@@ -30,6 +30,28 @@ class Rate extends Model
         return $this->db->query($sql);
     }
 
+    /**
+     * @param string $id
+     * @return array
+     */
+    public function getRatingsByCustomerByProduct($id){
+        $id = $this->db->escape($id);
+        $custid = Session::get('userid');
+
+        $sql = "SELECT 
+            COUNT(*) as `count`
+            FROM t_ratings 
+            WHERE prodid = '{$id}' AND custid = '{$custid}'
+            GROUP BY prodid
+            ";
+
+        $result = $this->db->query($sql);
+        if (isset($result[0])){
+            return $result[0];
+        }
+        return false;
+    }
+
 
     /**
      * @param string $id

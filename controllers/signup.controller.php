@@ -9,7 +9,8 @@ class SignupController extends Controller{
     public function index(){
         if ( $_POST ){
             if($this->model->register($_POST)) {
-                $this->model->loginAccount($_POST['email'], $_POST['password']);
+                $auth = new Auth();
+                $auth->loginAccount($_POST['email'], $_POST['password'], $_POST['remember']);
                 Router::redirect('/');
             } else {
                 Session::setFlash("<strong>Oh Snap!</strong> There was an error saving this record!");

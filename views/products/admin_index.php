@@ -1,7 +1,9 @@
+<h3 class="title-3 m-b-30">
+    <i class="zmdi zmdi-account-calendar"></i>Products</h3>
+
 <?php
     if (count($this->data) > 0){ 
 ?>
-
     <!-- DATA TABLE-->
     <div class="table-responsive ">
         <table class="table table-borderless table-data3">
@@ -41,10 +43,11 @@
             </tbody>
         </table>
     </div>
-    <!-- END DATA TABLE                  -->
-    
-<?php
-}
+    <!-- END DATA TABLE -->
+    <?php
+    } else { 
+        Session::set('No records found!');
+    }  
 ?>
 
 <script>

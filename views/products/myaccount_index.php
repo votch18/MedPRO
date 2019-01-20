@@ -1,3 +1,8 @@
+<h3 class="title-3 m-b-30">
+    <i class="zmdi zmdi-account-calendar"></i>Products</h3>
+    <div class="ml-auto">
+        <a href="/me/products/add/" class="btn btn-success" title="Add product"><i class="fa fa-plus"></i></a>
+    </div>
 <?php
     if (count($this->data) > 0){ 
 ?>
@@ -42,7 +47,9 @@
     <!-- END DATA TABLE                  -->
     
 <?php
-}
+} else {
+    Session::setFlash('No records found!');
+} 
 ?>
 
 <script>

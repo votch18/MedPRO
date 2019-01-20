@@ -12,6 +12,21 @@ class Account extends Model
         return $this->db->query($sql);
     }
 
+     /**
+     * @param mixed $id
+     * @return array
+     */
+    public function getAccountByUserId($id){        
+        $id = $this->db->escape($id);
+        $sql = "SELECT * FROM t_accounts WHERE custid = '{$id}' LIMIT 1";
+
+        $result = $this->db->query($sql);
+        if (isset($result[0])){
+            return $result[0];
+        }
+        return false;
+    }
+
     /**
      * register company
      * @param mixed $data

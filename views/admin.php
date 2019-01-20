@@ -197,19 +197,23 @@
           <div class="page-container3">
             <section class="alert-wrap p-t-50 p-b-70">
                 <div class="container">
+                    <?php
+                        if (Session::hasFlash()){ 
+                    ?>
                     <!-- ALERT-->
-                    <?php if ( Session::hasFlash() != null ) { ?>
-                    <div class="alert au-alert-success alert-dismissible fade show au-alert au-alert--70per" role="alert">
+                    <div class="alert alert-dismissible fade show au-alert au-alert--70per" role="alert">
                         <i class="zmdi zmdi-check-circle"></i>
-                        <span class="content">You successfully read this important alert message.</span>
+                        <span class="content"><?=Session::flash()?></span>
                         <button class="close" type="button" data-dismiss="alert" aria-label="Close">
                             <span aria-hidden="true">
                                 <i class="zmdi zmdi-close-circle"></i>
                             </span>
                         </button>
                     </div>
-                    <?php } ?>
                     <!-- END ALERT-->
+                    <?php
+                        }
+                    ?>
                 </div>
             </section>
             <section>

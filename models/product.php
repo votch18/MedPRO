@@ -239,9 +239,9 @@ class Product extends Model
      * @$filename array
      * @return string separated by comma
      */
-    public function changeImageOrder($filename, $main_photo){
+    public function changeImageOrder($filenames, $main_photo){
 
-        if (count($filename) == 1) return implode(",", $filename);
+        if (count($filenames) == 1) return implode(",", $filenames);
 
         $images = implode(",", $filenames);
         $images = str_replace($main_photo, '', $images);

@@ -2,7 +2,7 @@
     <div class="card-header">Products</div>
         <div class="card-body">
             <div class="card-title">
-                <h3 class="text-center title-2">Add Product</h3>
+                <h3 class="text-center title-2">Edit Product</h3>
             </div>
             <hr>          
             <form action="" method="post" enctype="multipart/form-data" novalidate>
