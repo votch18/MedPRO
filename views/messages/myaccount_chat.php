@@ -113,9 +113,9 @@
     });
 
 
-        /**
-        * Add product to cart
-        */
+    /**
+    * Add product to cart
+    */
     function sendMessage(message){
         
         return $.ajax({
@@ -216,8 +216,7 @@
 
                     }                   
                 }
-                
-                            
+                   
             });
 
             if ( count != old_count ) {

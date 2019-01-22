@@ -69,6 +69,27 @@ class Product extends Model
         return $this->db->query($sql);
     }
 
+     /**
+     * get all products by category
+     * @param int $category
+     * @return array
+     */
+    public function getCategorywithProducts($category){
+        $category = $this->db->escape($category);
+        $categoryid = $this->getProductCategoryByDescription($category);
+
+        $sql = "SELECT 
+            a.*,
+            
+            FROM l_categories a
+            LEFT JOIN (SELECT z.category, COUNT(*) as visits FROM t_products z WHERE z.category = a.lid GROUP BY z.category) x ON x.category = a.lid)
+            ";
+
+        return $this->db->query($sql);
+    }
+
+
+
     /**
      * $param string $category
      * @return int
